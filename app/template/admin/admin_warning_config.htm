@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<title>后台管理 - 预警配置</title>
+
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css"/>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+</head>
+
+<body class="body_ifm">
+<div class="infoboxp">
+	<div class="tty-tishi_top">
+		<!--<div class="admin_new_search_box" style="overflow: hidden; border-bottom: 15px solid #ECEFF8;">
+            <div class="formLayuiTo">
+                <div class="isticsFlexd">
+                    <h3>预警设置</h3>
+                    <span>常规预警配置：可设置发布职位、下载简历、发布简历、重置金额、发送短信的上限通知，并且可锁定账号/关闭短信操作，</span>
+                </div>
+            </div>
+        </div>-->
+		<div class="clear"></div>
+		<form class="layui-form">
+			<table width="100%" class="table_form">
+				<tr>
+					<th colspan="2" class="admin_bold_box">
+						<div class="admin_bold">配置一</div>
+					</th>
+				</tr>
+				<tr class="admin_table_trbg">
+					<th width="200">发布职位限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_addjob" id="warning_addjob" value="{yun:}$config.warning_addjob{/yun}" size="13" maxlength="5" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">份 / 天，超限后锁定账号</span>
+						<div class="early_warning_cz">
+							<input name="warning_addjob_type" value='1' lay-skin="switch" lay-text="是|否" {yun:}if $config.warning_addjob_type==1{/yun} checked {yun:}/if{/yun} type="checkbox" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>下载简历限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_downresume" id="warning_downresume" value="{yun:}$config.warning_downresume{/yun}" size="13" maxlength="5" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">份 / 天，超限后锁定账号</span>
+						<div class="early_warning_cz">
+							<input name="warning_downresume_type" value='1' lay-skin="switch" lay-text="是|否" {yun:}if $config.warning_downresume_type==1{/yun} checked {yun:}/if{/yun} type="checkbox" />
+						</div>
+					</td>
+				</tr>
+				<tr class="admin_table_trbg">
+					<th>发布简历限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_addresume" id="warning_addresume" value="{yun:}$config.warning_addresume{/yun}" size="13" maxlength="5" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">份 / 天，超限后锁定账号</span>
+						<div class="early_warning_cz">
+							<input name="warning_addresume_type" value='1' lay-skin="switch" lay-text="是|否" {yun:}if $config.warning_addresume_type==1{/yun} checked {yun:}/if{/yun} type="checkbox" />
+						</div>
+					</td>
+				</tr>
+
+				<tr class="admin_table_trbg">
+					<th>充值金额限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_recharge" id="warning_recharge" value="{yun:}$config.warning_recharge{/yun}" size="13" maxlength="9" onKeyUp="this.value=this.value.replace(/[^0-9.]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">元 / 天，超限后锁定账号</span>
+						<div class="early_warning_cz">
+							<input name="warning_recharge_type" value='1' lay-skin="switch" lay-text="是|否" {yun:}if $config.warning_recharge_type==1{/yun} checked {yun:}/if{/yun} type="checkbox" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>发送短信限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="sy_hour_msgnum" id="sy_hour_msgnum" value="{yun:}$config.sy_hour_msgnum{/yun}" size="10" maxlength="5" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">条 / 时，超限后关闭短信</span>
+						<div class="early_warning_cz">
+							<input name="warning_closemsg_type" value='1' lay-skin="switch" lay-text="是|否" {yun:}if $config.warning_closemsg_type==1{/yun} checked {yun:}/if{/yun} type="checkbox" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>浏览简历限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_lookresume" id="warning_lookresume" value="{yun:}$config.warning_lookresume{/yun}" size="10" maxlength="5" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">份 / 天，超限后锁定账号</span>
+						<div class="early_warning_cz">
+							<input name="warning_lookresume_type" value='1' lay-skin="switch" lay-text="是|否" {yun:}if $config.warning_lookresume_type==1{/yun} checked {yun:}/if{/yun} type="checkbox" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>浏览职位限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_lookjob" id="warning_lookjob" value="{yun:}$config.warning_lookjob{/yun}" size="10" maxlength="5" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">份 / 天，超限后锁定账号</span>
+						<div class="early_warning_cz">
+							<input name="warning_lookjob_type" value='1' lay-skin="switch" lay-text="是|否" {yun:}if $config.warning_lookjob_type==1{/yun} checked {yun:}/if{/yun} type="checkbox" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>拨号次数限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_teljob" id="warning_teljob" value="{yun:}$config.warning_teljob{/yun}" size="10" maxlength="5" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">次 / 天，超限后锁定账号</span>
+						<div class="early_warning_cz">
+							<input name="warning_teljob_type" value='1' lay-skin="switch" lay-text="是|否" {yun:}if $config.warning_teljob_type==1{/yun} checked {yun:}/if{/yun} type="checkbox" />
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<th colspan="2" class="admin_bold_box">
+						<div class="admin_bold">配置二</div>
+					</th>
+				</tr>
+				<tr class="admin_table_trbg">
+					<th>简历投递限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_sendresume" id="warning_sendresume" value="{yun:}$config.warning_sendresume{/yun}" size="13" maxlength="5" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">份 / 天</span>
+					</td>
+				</tr>
+				<tr class="admin_table_trbg">
+					<th>触发操作：</th>
+					<td>
+						<input type="radio" {yun:}if $config.warning_sendresume_type==1{/yun}checked{yun:}/if{/yun} name="warning_sendresume_type" value="1" lay-filter="sendResume" title="无" />
+						<input type="radio" {yun:}if $config.warning_sendresume_type==2{/yun}checked{yun:}/if{/yun} name="warning_sendresume_type" value="2" lay-filter="sendResume" title="禁止投递" />
+						<input type="radio" {yun:}if $config.warning_sendresume_type==3{/yun}checked{yun:}/if{/yun} name="warning_sendresume_type" value="3" lay-filter="sendResume" title="锁定账号" />
+					</td>
+				</tr>
+				<tr class="admin_table_trbg send_tips" {yun:}if $config.warning_sendresume_type!=2{/yun} style="display: none;"{yun:}/if{/yun}>
+				<th>自定义提示：</th>
+				<td>
+					<div class="w400">
+						<input class="layui-input" type="text" name="warning_sendresume_tips" value="{yun:}$config.warning_sendresume_tips{/yun}" />
+					</div>
+				</td>
+				</tr>
+				<tr>
+					<th colspan="2" class="admin_bold_box">
+						<div class="admin_bold">配置三</div>
+					</th>
+				</tr>
+				<tr class="admin_table_trbg">
+					<th>简历投递限：</th>
+					<td>
+                        <span class="early_warning_text">
+                            <input class="" type="number" name="warning_sqjob" id="warning_sqjob" value="{yun:}$config.warning_sqjob{/yun}" size="13" maxlength="5" onKeyUp="this.value=this.value.replace(/[^0-9]/g,'')"/>
+                        </span>
+						<span class="early_warning_p">类 / 天（跨行业投递，每日投递不同类别职位）</span>
+					</td>
+				</tr>
+				<tr class="admin_table_trbg">
+					<th>触发操作：</th>
+					<td>
+						<input type="radio" {yun:}if $config.warning_sqjob_type==1{/yun}checked{yun:}/if{/yun} name="warning_sqjob_type" value="1" lay-filter="sqJob" title="无" />
+						<input type="radio" {yun:}if $config.warning_sqjob_type==2{/yun}checked{yun:}/if{/yun} name="warning_sqjob_type" value="2" lay-filter="sqJob" title="禁止投递" />
+						<input type="radio" {yun:}if $config.warning_sqjob_type==3{/yun}checked{yun:}/if{/yun} name="warning_sqjob_type" value="3" lay-filter="sqJob" title="锁定账号" />
+					</td>
+				</tr>
+				<tr class="admin_table_trbg sq_tips" {yun:}if $config.warning_sqjob_type!=2{/yun} style="display: none;"{yun:}/if{/yun}>
+				<th>自定义提示：</th>
+				<td>
+					<div class="w400">
+						<input class="layui-input" type="text" name="warning_sqjob_tips" value="{yun:}$config.warning_sqjob_tips{/yun}" />
+					</div>
+				</td>
+				</tr>
+				<tr class="admin_table_trbg">
+					<th width="200"></th>
+					<td align="left">
+						<input class="tty_sub" id="integral" type="button" name="config" value="提交"/>
+						<input class="tty_cz" type="reset" value="重置"/>
+					</td>
+				</tr>
+			</table>
+		</form>
+
+	</div>
+</div>
+
+<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+
+<script>
+	$(function () {
+		$("#integral").click(function () {
+
+			loadlayer();
+
+			$.post("index.php?m=warning&c=config", {
+
+				config: $("#integral").val(),
+
+				warning_addjob_type: $("input[name=warning_addjob_type]").attr('checked') == 'checked' ? 1 : 2,
+				warning_addjob: $("#warning_addjob").val(),
+
+				warning_downresume_type: $("input[name=warning_downresume_type]").attr('checked') == 'checked' ? 1 : 2,
+				warning_downresume: $("#warning_downresume").val(),
+
+				warning_addresume_type: $("input[name=warning_addresume_type]").attr('checked') == 'checked' ? 1 : 2,
+				warning_addresume: $("#warning_addresume").val(),
+
+				warning_recharge_type: $("input[name=warning_recharge_type]").attr('checked') == 'checked' ? 1 : 2,
+				warning_recharge: $("#warning_recharge").val(),
+
+				warning_closemsg_type: $("input[name=warning_closemsg_type]").attr('checked') == 'checked' ? 1 : 2,
+				sy_hour_msgnum: $("#sy_hour_msgnum").val(),
+
+				warning_lookresume_type: $("input[name=warning_lookresume_type]").attr('checked') == 'checked' ? 1 : 2,
+				warning_lookresume: $("#warning_lookresume").val(),
+
+				warning_lookjob_type: $("input[name=warning_lookjob_type]").attr('checked') == 'checked' ? 1 : 2,
+				warning_lookjob: $("#warning_lookjob").val(),
+
+				warning_teljob_type: $("input[name=warning_teljob_type]").attr('checked') == 'checked' ? 1 : 2,
+				warning_teljob: $("#warning_teljob").val(),
+
+				warning_sendresume: $("#warning_sendresume").val(),
+				warning_sendresume_type: $("input[name=warning_sendresume_type]:checked").val(),
+				warning_sendresume_tips: $("input[name=warning_sendresume_tips]").val(),
+				warning_sendresume_tipss: $("input[name=warning_sendresume_tipss]").val(),
+
+				warning_sqjob: $("#warning_sqjob").val(),
+				warning_sqjob_type: $("input[name=warning_sqjob_type]:checked").val(),
+				warning_sqjob_tips: $("input[name=warning_sqjob_tips]").val(),
+				warning_sqjob_tipss: $("input[name=warning_sqjob_tipss]").val(),
+
+				pytoken: $("#pytoken").val()
+
+			}, function (data, textStatus) {
+				parent.layer.closeAll('loading');
+				config_msg(data);
+			});
+		});
+	});
+
+	layui.use(['form'], function () {
+		var form = layui.form,
+				$ = layui.$;
+
+		form.on('radio(sendResume)', function (data) {
+			if (data.value == 2) {
+
+				$('.send_tips').show();
+			} else {
+
+				$('.send_tips').hide();
+			}
+		});
+
+		form.on('radio(sqJob)', function (data) {
+			if (data.value == 2) {
+
+				$('.sq_tips').show();
+			} else {
+
+				$('.sq_tips').hide();
+			}
+		});
+	});
+
+</script>
+</body>
+</html>

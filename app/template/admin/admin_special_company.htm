@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <!--[if IE 6]>
+    <script src="./js/png.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script>
+        DD_belatedPNG.fix('.png,.admin_infoboxp_tj,');
+    </script>
+    <![endif]-->
+    <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script type="text/javascript" src="js/admin_public.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script type="text/javascript" src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script>
+    <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/viewer/viewer.min.js?v={yun:}$config.cachecode{/yun}"></script>
+
+    <link href="{yun:}$config.sy_weburl{/yun}/js/viewer/viewer.min.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+<div class="infoboxp">
+
+    <div class="tty-tishi_top">
+
+        <div class="admin_new_search_box">
+
+            <div class="admin_new_search_name">搜索类型：</div>
+
+            <form action="index.php" name="myform" method="get">
+
+                <input type="hidden" name="m" value="special" />
+                <input type="hidden" name="c" value="addlist" />
+                <input type="hidden" name="sid" value="{yun:}$smarty.get.sid{/yun}" />
+                <input type="hidden" name="status" value="{yun:}$smarty.get.status{/yun}" />
+                <input type="hidden" name="rec" value="{yun:}$smarty.get.rec{/yun}" />
+                <input type="hidden" name="time" value="{yun:}$smarty.get.time{/yun}" />
+                <input type="hidden" name="rating" value="{yun:}$smarty.get.rating{/yun}" />
+                <input name="id" value="{yun:}$smarty.get.id{/yun}" type="hidden" />
+
+                <div class="admin_Filter_text formselect" did="dcom_type">
+                    <input type="button" {yun:}if $smarty.get.type=='1' ||$smarty.get.type== '' {/yun} value="企业名称" {yun:}elseif $smarty.get.type== '2' {/yun} value="用户名称" {yun:}elseif $smarty.get.type== '3' {/yun} value="联系人" {yun:}elseif $smarty.get.type== '4' {/yun} value="联系电话" {yun:}elseif $smarty.get.type== '5' {/yun} value="用户邮箱" {yun:}elseif $smarty.get.type== '6' {/yun} value="用户ID" {yun:}/if{/yun} class="admin_new_select_text" id="bcom_type">
+
+                    <input type="hidden" name="type" id="com_type" value="{yun:}if $smarty.get.type{/yun}{yun:}$smarty.get.type{/yun}{yun:}else{/yun}1{yun:}/if{/yun}" />
+
+                    <div class="admin_Filter_text_box" style='display: none' id="dcom_type">
+                        <ul>
+                            <li><a href="javascript:void(0)" onClick="formselect('1','com_type','企业名称')">企业名称</a></li>
+                            <li><a href="javascript:void(0)" onClick="formselect('2','com_type','用户名称')">用户名称</a></li>
+                            <li><a href="javascript:void(0)" onClick="formselect('3','com_type','联系人')">联系人</a></li>
+                            <li><a href="javascript:void(0)" onClick="formselect('4','com_type','联系电话')">联系电话</a></li>
+                            <li><a href="javascript:void(0)" onClick="formselect('5','com_type','用户邮箱')">用户邮箱</a></li>
+                            <li><a href="javascript:void(0)" onClick="formselect('6','com_type','用户ID')">用户ID</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <input type="text" placeholder="输入你要搜索的关键字" name="keyword" class="admin_new_text">
+                <input type="submit" name='news_search' value="搜索" class="admin_new_bth" />
+
+                <a href="javascript:void(0)" onclick="$('.admin_screenlist_box').toggle();" class="admin_new_search_gj">高级搜索</a>
+            </form>
+
+            {yun:}include file="admin/admin_search.htm"{/yun}
+
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="tty_table-bom">
+        <div class="table-list" style="color:#898989">
+            <div class="admin_table_border">
+                <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                <form action="index.php" name="myform" method="get" id='myform' target="supportiframe">
+
+                    <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+                    <input name="m" value="special" type="hidden" />
+                    <table width="100%">
+                        <thead>
+                        <tr class="admin_table_top">
+                            <th style="width: 20px;">
+                                <label for="chkall"><input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label>
+                            </th>
+                            <th>
+                                {yun:}if $smarty.get.t=="uid" && $smarty.get.order=="asc"{/yun}
+                                <a href="{yun:}searchurl order=desc t=uid m=special c=addlist untype='order,t'{/yun}">用户ID<img	src="images/sanj.jpg" /></a>
+                                {yun:}else{/yun}
+                                <a href="{yun:}searchurl order=asc t=uid m=special  c=addlist untype='order,t'{/yun}">用户ID<img src="images/sanj2.jpg" /></a>
+                                {yun:}/if{/yun}
+                            </th>
+                            <th align="left" width="150">名称/用户名/邮箱</th>
+                            <th align="left">等级/到期时间</th>
+                            <th align="left">联系电话/邮箱/认证</th>
+                            <th align="left">企业Logo</th>
+                            <th>登录/注册/来源</th>
+                            <th>站点</th>
+                            <th>企业顾问</th>
+                            <th width="60">审核</th>
+                            <th>职位数</th>
+                            <th>参会情况</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {yun:}foreach item=v key=key from=$rows{/yun}
+                        <tr align="center" {yun:}if ($key+1)%2=='0' {/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.uid{/yun}">
+                        <td><input type="checkbox" value="{yun:}$v.uid{/yun}" {yun:}if $v.jobnum lte 0 || $v.r_status!='1'{/yun}disabled{yun:}/if{/yun} class="check_all" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+                        <td align="left" class="td1" style="text-align: center;">
+                            <span>{yun:}$v.uid{/yun}</span>
+                        </td>
+                        <td align="left">
+                            <div class="">
+                                <a href="{yun:}$v.comUrl{/yun}" target="_blank" title="{yun:}$v.name{/yun} {yun:}if $v.shortname{/yun}【简称：{yun:}$v.shortname{/yun}】{yun:}/if{/yun}">
+                                    {yun:}$v.name|mb_substr:0:10:"utf-8"{/yun}
+                                    {yun:}if mb_strlen($v.name)>10{/yun}...{yun:}/if{/yun}
+                                    {yun:}if $v.shortname{/yun}【{yun:}$v.shortname{/yun}】{yun:}/if{/yun}
+                                </a>
+                            </div>
+                            <div class="mt5">
+                                <a href="javascript:void(0)" class="admin_com_name" onclick="toMember('index.php?m=admin_company&c=Imitate&uid={yun:}$v.uid{/yun}','{yun:}$v.usertype{/yun}')">{yun:}$v.username{/yun}</a>
+                                {yun:}if $v.status==2{/yun} <img src="../config/ajax_img/suo.png" title="已锁定" width="15">{yun:}/if{/yun}
+                            </div>
+                        </td>
+
+                        <td align="left">
+                            {yun:}if $today <= $v.vipetime || ($v.vipetime=='0' && $v.rating>'0'){/yun}
+                            {yun:}$v.rating_name{/yun}
+                            {yun:}else{/yun}
+                            <b style="color: red;" class="oldrating">
+                                {yun:}if $v.oldrating_name{/yun}
+                                {yun:}$v.oldrating_name{/yun}
+                                {yun:}else{/yun}
+                                {yun:}$v.rating_name{/yun}
+                                {yun:}/if{/yun}
+                            </b>
+                            {yun:}/if{/yun}
+
+                            {yun:}if $v.vipetime=='0'{/yun}
+                            <div class="mt5">不限</div>
+                            {yun:}else{/yun}
+                            {yun:}if $today <= $v.vipetime{/yun}
+                            <div class="mt5">{yun:}$v.vipetime|date_format:"%Y-%m-%d"{/yun}</div>
+                            {yun:}else{/yun}
+                            <div class="mt5" style="color: red;">{yun:}$v.vipetime|date_format:"%Y-%m-%d"{/yun}</div>
+                            {yun:}/if{/yun}
+                            {yun:}/if{/yun}
+                        </td>
+                        <td align="left">
+                            <div>
+                                {yun:}if $v.linktel{/yun}
+                                <span class="admin_new_sj">{yun:}$v.linktel{/yun}</span>
+
+
+                                {yun:}elseif $v.linkphone{/yun}
+                                <span class="admin_new_sj">{yun:}$v.linkphone{/yun}</span>
+
+                                {yun:}/if{/yun}
+                            </div>
+                            {yun:}if $v.linkmail{/yun}
+                            <div class="mt5">
+                                <span class="admin_new_yx">{yun:}$v.linkmail{/yun}</span>
+                            </div>
+                            {yun:}/if{/yun}
+                            <div class="mt5">
+                                {yun:}if $v.moblie_status==1{/yun}
+                                <img src="../config/ajax_img/2-1.png" msg="手机已绑定" data-status="{yun:}$v.moblie_status{/yun}" data-url="{yun:}$v.uid{/yun}"  data-phone="{yun:}$v.linktel{/yun}"  data-name="{yun:}$v.name{/yun}"  class="company_rzpng  mt_phone" width="20" height="20">
+                                {yun:}else{/yun}
+                                <img src="../config/ajax_img/2-2.png" msg="手机未绑定" data-status="{yun:}$v.moblie_status{/yun}" data-url="{yun:}$v.uid{/yun}"  data-phone="{yun:}$v.linktel{/yun}"  data-name="{yun:}$v.name{/yun}"  class="company_rzpng  mt_phone" width="20" height="20">
+                                {yun:}/if{/yun}
+
+                                {yun:}if $v.wxid!="" || $v.wxopenid!="" || $v.app_wxid!=""{/yun}
+                                <img src="../config/ajax_img/4-1.png" class="wxBindmsgs" msg="{yun:}$v.wxBindmsg{/yun}" onclick="showQrcode('{yun:}$v.uid{/yun}','{yun:}$v.wxid{/yun}')" width="20" height="20" />
+                                {yun:}else{/yun}
+                                <img src="../config/ajax_img/4-2.png" class="wxBindmsgs" msg="{yun:}$v.wxBindmsg{/yun}" onclick="showQrcode('{yun:}$v.uid{/yun}','{yun:}$v.wxid{/yun}')" width="20" height="20" />
+                                {yun:}/if{/yun}
+
+                                {yun:}if $v.yyzz_status==1{/yun}
+                                <img src="../config/ajax_img/3-1.png" msg="企业资质已认证" data-url="{yun:}$v.yyzzurl{/yun}" data-ourl="{yun:}$v.owner_cert_url{/yun}" data-wurl="{yun:}$v.wt_cert_url{/yun}" data-otherurl="{yun:}$v.other_cert_url{/yun}" data-uid="{yun:}$v.uid{/yun}" data-name="{yun:}$v.name{/yun}" data-status="{yun:}$v.yyzz_status{/yun}" data-scredit="{yun:}$v.social_credit{/yun}" class="company_rzpng m_yyzz" width="20" height="20">
+                                {yun:}else{/yun}
+                                <img src="../config/ajax_img/3-2.png" msg="企业资质未认证" data-url="{yun:}$v.yyzzurl{/yun}" data-ourl="{yun:}$v.owner_cert_url{/yun}" data-wurl="{yun:}$v.wt_cert_url{/yun}" data-otherurl="{yun:}$v.other_cert_url{/yun}" data-uid="{yun:}$v.uid{/yun}" data-name="{yun:}$v.name{/yun}" data-status="{yun:}$v.yyzz_status{/yun}" data-scredit="{yun:}$v.social_credit{/yun}" class="company_rzpng m_yyzz" width="20" height="20">
+                                {yun:}/if{/yun}
+                                {yun:}if $v.email_status==1{/yun}
+                                <img src="../config/ajax_img/1-1.png"  msg="邮箱已认证" data-status="{yun:}$v.email_status{/yun}" data-url="{yun:}$v.uid{/yun}"  data-mail="{yun:}$v.linkmail{/yun}"   data-name="{yun:}$v.name{/yun}" class="company_rzpng mt_email" width="20" height="20">
+                                {yun:}else{/yun}
+
+                                <img src="../config/ajax_img/1-2.png"  msg="邮箱未认证" data-status="{yun:}$v.email_status{/yun}" data-url="{yun:}$v.uid{/yun}"  data-mail="{yun:}$v.linkmail{/yun}"  data-name="{yun:}$v.name{/yun}"  class="company_rzpng mt_email" width="20" height="20">
+                                {yun:}/if{/yun}
+                            </div>
+                        </td>
+                        <td align="left">
+                            <img src="{yun:}$v.logo{/yun}" width="88px" height="88px" style="height: 88px; width: 88px; border-radius: 10px;" />
+                        </td>
+                        <td>
+                            {yun:}if $v.login_date{/yun}
+                            {yun:}$v.login_date|date_format:"%Y-%m-%d %H:%M"{/yun}
+                            {yun:}else{/yun}
+                            未登录
+                            {yun:}/if{/yun}
+                            <div class="">{yun:}$v.reg_date|date_format:"%Y-%m-%d %H:%M"{/yun}</div>
+                            <div class="">{yun:}$source[$v.source]{/yun}</div>
+                        </td>
+
+                        <td>
+                            <div>{yun:}$Dname[$v.did]{/yun}</div>
+                        </td>
+
+                        <td align="center">
+                            {yun:}if $v.crm_uid{/yun}
+                            <div>{yun:}$v.crm_name{/yun}</div>
+                            {yun:}else{/yun}
+                            <div>未分配</div>
+                            {yun:}/if{/yun}
+                        </td>
+
+                        <td>
+                            {yun:}if $v.r_status=='1'{/yun}
+                            <span class="admin_com_Audited">已审核</span>
+                            {yun:}elseif $v.r_status=='2'{/yun}
+                            <span class="admin_com_Lock">已锁定</span>
+                            {yun:}elseif $v.r_status=='3'{/yun}
+                            <span class="admin_com_tg">未通过</span>
+                            {yun:}elseif $v.r_status=='4'{/yun}
+                            <span class="admin_com_tg">已暂停</span>
+                            {yun:}else{/yun}
+                            <span class="admin_com_noAudited">未审核</span>
+                            {yun:}/if{/yun}
+
+                        </td>
+                        <td align="center">
+                            <div>
+                                {yun:}if $v.jobnum gt 0{/yun}{yun:}$v.jobnum{/yun}{yun:}else{/yun}<font color="red">0</font>{yun:}/if{/yun}个
+                            </div>
+                        </td>
+                        <td align="center">
+                            {yun:}if $v.join == 1{/yun}<font color="red">已参加</font>{yun:}else{/yun}未参加{yun:}/if{/yun}
+                        </td>
+                        <td align="center">
+                            {yun:}if $v.jobnum gt 0 && $v.r_status=='1'{/yun}
+                            <a href="javascript:void(0);" onclick="addSpecialCom('{yun:}$v.uid{/yun}');"  class="admin_new_c_bth" title="加入">加入</a>
+                            {yun:}else{/yun}
+                            {yun:}if $v.r_status!='1'{/yun}
+                            <div class="">企业未审核</div>
+                            {yun:}/if{/yun}
+                            {yun:}if $v.jobnum <=0{/yun}
+                            <span class="">无职位</span>
+                            {yun:}/if{/yun}
+
+                            {yun:}/if{/yun}
+                        </td>
+                        </tr>
+                        {yun:}/foreach{/yun}
+                        <tr>
+                            <td align="center"><label for="chkall2"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></label></td>
+                            <td colspan="12">
+                                <label for="chkAll2">全选</label>
+                                <input class="admin_button" type="button" name="delsub" value="批量加入" onClick="audall();" />
+
+                            </td>
+                        </tr>
+
+                        {yun:}if $total > $config.sy_listnum {/yun}
+                        <tr>
+                            {yun:}if $pagenum==1{/yun}
+                            <td colspan="3">从 1 到 {yun:}$config.sy_listnum {/yun} ，总共 {yun:}$total{/yun} 条</td>
+                            {yun:}else if $pagenum > 1 && $pagenum < $pages{/yun}
+                            <td colspan="3">从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到  {yun:}$pagenum * $config.sy_listnum{/yun} ，总共 {yun:}$total{/yun} 条</td>
+                            {yun:}else if $pagenum == $pages{/yun}
+                            <td colspan="3">从 {yun:}($pagenum-1) * $config.sy_listnum + 1{/yun} 到 {yun:}$total{/yun} ，总共 {yun:}$total{/yun} 条</td>
+                            {yun:}/if{/yun}
+                            <td colspan="10" class="digg">{yun:}$pagenav{/yun}</td>
+                        </tr>
+                        {yun:}/if{/yun}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var sid = '{yun:}$smarty.get.sid{/yun}';
+
+    function addSpecialCom(uid){
+
+        var pytoken = $("#pytoken").val();
+
+        parent.layer.confirm("确认将该企业添加至专题？", function() {
+
+            $.post("index.php?m=special&c=savespecial", {
+                sid:sid,
+                uid : uid,
+                pytoken : pytoken
+            }, function(data) {
+                parent.layer.closeAll();
+                var dataJson = eval("(" + data + ")");
+
+                if(dataJson.errcode=='9'){
+                    parent.layer.msg(dataJson.msg, 2, 9,function(mdata){
+                        location.href = 'index.php?m=special&c=com&id='+sid;
+                    });
+                }else{
+                    parent.layer.msg(dataJson.msg, 2, 8);
+                }
+            });
+        });
+    }
+    /* 批量添加 */
+    function audall() {
+        var codewebarr = "";
+        var pytoken = $("#pytoken").val();
+
+        $(".check_all:checked").each(function() {
+            if (codewebarr == "") {
+                codewebarr = $(this).val();
+            } else {
+                codewebarr = codewebarr + "," + $(this).val();
+            }
+        });
+
+        if (codewebarr == "") {
+            parent.layer.msg('您还未选择参会企业！', 2, 8);
+            return false;
+        } else {
+            parent.layer.confirm("确认添加至专题招聘？", function() {
+
+                $.post("index.php?m=special&c=mutiAddCom", {
+                    sid:sid,
+                    uid : codewebarr,
+                    pytoken : pytoken
+                }, function(data) {
+                    parent.layer.closeAll();
+                    var dataJson = eval("(" + data + ")");
+
+                    if(dataJson.errcode=='9'){
+                        parent.layer.msg(dataJson.msg, 2, 9,function(mdata){
+                            location.href = 'index.php?m=special&c=com&id='+sid;
+                        });
+                    }else{
+                        parent.layer.msg(dataJson.msg, 2, 8);
+                    }
+                });
+            });
+        }
+    }
+
+    layui.use(['layer', 'form'], function() {
+        var layer = layui.layer,
+            form = layui.form,
+            $ = layui.$;
+
+    });
+
+
+    function toMember(url, usertype){
+        if (usertype !='2'){
+            if(usertype == '0'){
+                parent.layer.confirm("该账户当前没有设置身份，以招聘者身份模拟进入可能导致部分功能无法正常使用，是否确认进入？", function() {
+                    parent.layer.closeAll();
+                    window.open(url);
+                });
+            }else{
+                if(usertype == '1'){
+                    var u = '求职者';
+                }else if (usertype == '3'){
+                    var u = '猎头';
+                }else if (usertype == '4'){
+                    var u = '培训';
+                }
+                parent.layer.confirm("该账户当前身份为"+u+"，以招聘者身份模拟进入可能导致部分功能无法正常使用，是否确认进入？", function() {
+                    parent.layer.closeAll();
+                    window.open(url);
+                });
+            }
+        }else{
+            window.open(url);
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

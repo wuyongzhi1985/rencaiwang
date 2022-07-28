@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+		<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"
+		 type="text/css" />
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+		<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+		<title>后台管理</title>
+	</head>
+
+	<body class="body_ifm">
+		<div class="infoboxp">
+			<div class="tty-tishi_top">
+				<div class="tabs_info">
+					<ul>
+						<li>
+							<a href="index.php?m=database">备份数据</a>
+						</li>
+						<li>
+							<a href="index.php?m=database&c=backin">恢复数据</a>
+						</li>
+						<li>
+							<a href="index.php?m=database&c=optimizing">优化数据</a>
+						</li>
+						<li class="curr">
+							<a href="index.php?m=database&c=clearList">数据清理</a>
+						</li>
+					</ul>
+				</div>
+
+				<!-- <div class="admin_new_tip">
+					<a href="javascript:;" class="admin_new_tip_close"></a>
+					<a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+					<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示22</div>
+					<div class="admin_new_tip_list_cont">
+						<div class="admin_new_tip_list">定期清理数据表碎片可以提升数据库的查询速度。</div>
+						<div class="admin_new_tip_list">从而提升用户体验度，站长可自行选择老数据清理。</div>
+					</div>
+				</div> -->
+				<div style="line-height: 45px;overflow: hidden; font-size: 13px; padding: 0 20px; color: #61687C;">
+					<span>定期清理数据表碎片可以提升数据库的查询速度。从而提升用户体验度，站长可自行选择老数据清理。</span>
+				</div>
+				<div class="clear"></div>
+
+				<div class="table-list" id="databaseshow">
+					<div class="admin_table_border">
+						<iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+						<form class="layui-form" action="index.php?m=database&c=clear" target="supportiframe" method="post" onSubmit="return check_form()">
+							<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+							<table width="100%" class="databaseTableAll">
+								<thead>
+									<tr class="admin_table_top">
+										<th colspan="4" align="left"><span style="padding-left:10px;">清理内容</span></th>
+									</tr>
+								</thead>
+								<tr class="databasOne">
+									<td colspan="4">
+										<div class="layui-input-block">
+											<input type="checkbox" name="clear_data" value="userid_job" lay-skin="primary" title="职位申请记录">
+											<input type="checkbox" name="clear_data" value="userid_msg" lay-skin="primary" title="面试邀请记录">
+											<input type="checkbox" name="clear_data" value="down_resume" lay-skin="primary" title="下载简历记录">
+											<input type="checkbox" name="clear_data" value="talent_pool" lay-skin="primary" title="收藏简历记录">
+											<input type="checkbox" name="clear_data" value="look_resume" lay-skin="primary" title="浏览简历记录">
+											<input type="checkbox" name="clear_data" value="look_job" lay-skin="primary" title="浏览职位记录">
+										</div>
+										<div class="layui-input-block">
+											<input type="checkbox" name="clear_data" value="email_msg" lay-skin="primary" title="邮件发送记录">
+											<input type="checkbox" name="clear_data" value="moblie_msg" lay-skin="primary" title="短信发送记录">
+											<input type="checkbox" name="clear_data" value="member_log" lay-skin="primary" title="会员日志记录">
+											<input type="checkbox" name="clear_data" value="admin_log" lay-skin="primary" title="管理员日志">
+											<input type="checkbox" name="clear_data" value="recycle" lay-skin="primary" title="回收站">
+										</div>
+									</td>
+								</tr>
+								<thead>
+									<tr class="admin_table_top">
+										<th colspan="4" align="left"><span style="padding-left:10px;">清理时间</span></th>
+									</tr>
+								</thead>
+								<tr class="databasOne">
+									<td colspan="3">
+										<div class="layui-input-block">
+											<input type="radio" name="clear_time" value="730" title="两年前">
+											<input type="radio" name="clear_time" value="365" title="一年前">
+											<input type="radio" name="clear_time" value="180" title="半年前">
+											<input type="radio" name="clear_time" value="90" title="三个月前">
+											<input type="radio" name="clear_time" value="60" title="两个月前">
+											<input type="radio" name="clear_time" value="30" title="一个月前">
+										</div>
+									</td>
+								</tr>
+
+								<tr align="center">
+									<td colspan="4"><button class="layui-btn tty_sub" lay-submit="" lay-filter="clear">清除</button></td>
+								</tr>
+
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="table-list mt10" style="display:none" id="success">
+				<div class="admin_table_border">
+					<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">
+						<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- 弹窗start -->
+		<div class="clearDataPopup">
+			<div class="clearDataCant">
+				<div class="dataCantClose">
+					<img src="images/coloes.png?v={yun:}$config.cachecode{/yun}" alt="">
+				</div>
+				<div class="clearDataCantInfo">
+					<div class="clearDataCantOne">
+						<span>温馨提示</span>
+					</div>
+					<div class="clearDataCantTwo">
+						<span id="clearing-content"></span>
+					</div>
+					<div class="clearDataCantTwo">
+						<span>清除期间请勿关闭页面</span>
+					</div>
+					<div class="clearDataCantThree clearing">
+						<div class="cantThreeAlls">
+							<div class="threeLeft">
+								<div class="leftcircle"></div>
+							</div>
+							<div class="threeRight">
+								<div class="rightcircle"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="clearDataCantFive clearing">
+						<span id="clearing-tip"></span>
+					</div>
+
+					<!-- 已完成后的图标 -->
+					<div class="clearDataCantSixs complete">
+						<img src="images/wancheng32.png?v={yun:}$config.cachecode{/yun}" alt="">
+					</div>
+					<div class="clearDataCantFive complete">
+						<span>清除完成</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end -->
+		<script type="text/javascript">
+			layui.use(['layer', 'form'], function() {
+				var layer = layui.layer,
+					form = layui.form,
+					$ = layui.$;
+			});
+
+			function check_form() {
+				$(".clearing").show();
+				$(".complete").hide();
+
+				var clearData = $("input[name='clear_data']");
+
+				var pytoken = $("#pytoken").val(),
+					checkNum = 0,
+					clearDataArr = new Array(),
+					ccmsg = '';
+
+				for (var i = 0; i < clearData.length; i++) {
+
+					if (clearData[i].checked) {
+						checkNum++;
+						clearDataArr.push({type: $(clearData[i]).val(), name: $(clearData[i]).attr('title')})
+					}
+				}
+
+				if (checkNum == 0) {
+					parent.layer.msg('请选择需要清理的数据！', 2, 8);
+					return false;
+				}
+				var clearTime = $("input[name='clear_time']:checked").val();
+				if (!clearTime) {
+					parent.layer.msg('请选择清理时间！', 2, 8);
+					return false;
+				}
+
+				ccmsg += '开始清除' + $("input[name='clear_time']:checked").attr('title') + '的数据';
+				$("#clearing-content").text(ccmsg);
+
+				var params = {
+					pytoken: pytoken,
+					clear_time: clearTime
+				};
+
+				console.log('数据清除开始');
+				$(".clearDataPopup").show();
+				$("#clearing-tip").text('数据清除中');
+
+				setTimeout(function() { // 保证其它js执行完成
+					clearDataArr.forEach(function (item) {
+						console.log(item.name + '数据清除中');
+						$("#clearing-tip").text(item.name + '数据清除中');
+
+						params.clear_data = item.type
+
+						clearPost(params);
+
+						console.log(item.name + '数据清除完成');
+					})
+					console.log('数据清除完成');
+					$(".clearing").hide();
+					$(".complete").show();
+				}, 100)
+
+				return false;
+			}
+
+			function clearPost(params) {
+				$.ajax({
+					url: 'index.php?m=database&c=clear',
+					type: 'post',
+					data: params,
+					async: false,
+					dataType: 'json',
+					timeout: 30,
+					success: function(res) {
+						// console.log(res)
+						if(res.st == 91) { // 存在未删除完的数据
+							clearPost(params);
+						} else if(res.st == 92) { // 删除完成
+							console.log('删除完成', res.st, res.msg)
+						} else { // 其它情况
+							console.log('其它情况', res.st, res.msg)
+						}
+					}
+				})
+			}
+		</script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".clearDataClick").click(function(){
+				$(".clearDataPopup").show();
+			});
+			$(".dataCantClose").click(function(){
+				$(".clearDataPopup").hide();
+			});
+		});
+	</script>
+	</body>
+
+</html>

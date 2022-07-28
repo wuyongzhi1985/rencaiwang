@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+    <title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+    <div class="infoboxp">
+        <div class="tty-tishi_top">
+            <div class="admin_new_tip">
+                <a href="javascript:;" class="admin_new_tip_close"></a>
+                <a href="javascript:;" class="admin_new_tip_open" style="display:none;"></a>
+                <div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+                <div class="admin_new_tip_list_cont">
+                    <div class="admin_new_tip_list">运营人员可以针对微信公众号设置“回复关健词”方式后，用户在微信公众号上回复该关健词可以自动返回已设置的关健词或用户解决日常问题！</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div id="app" class="" style="display: none;">
+                <iframe id="supportiframe" name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+                <form class="layui-form" enctype="multipart/form-data">
+                    <div class="table_form tableFormdiv">
+                        <div class="admin_table_trbg">
+                            <div colspan="2" class="admin_bold_box">
+                                <div class="admin_bold">添加规则</div>
+                            </div>
+                        </div>
+                        <div class="formdivAll">
+                            <div class="formdivAllTitle">
+                                <p>规则名：</p>
+                                <div class="formdivAllIput">
+                                    <input class="input-text" type="text" name="title" id="title" size="30" v-model="row.title" maxlength="255" placeholder="请输入规则名">
+                                </div>
+                            </div>
+                            <div class="formdivAllCrux">
+                                <p>关键字：</p>
+                                <div class="formdivAllIput">
+                                    <textarea name="keyword" id="keyword" rows="10" cols='40' maxlength="255" class="wx_search_textarea web_text_textarea" v-model="row.keyword" placeholder="请输入关键字"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!--文字类型end-->
+                            <div class="boxCtrl">
+                                <p>回复消息：</p>
+                                <div class="boxCtrlAll">
+                                    <div class="allReplyList">
+                                        <!--切换标签-->
+                                        <div :class="item.id==conid?'choosed_class':'allReplyListOne'" v-for="(item,cKey) in conarr" :key="item.id">
+                                            <span @click="tabcon(cKey)">消息{{cKey+1}} {{item.msgtype_n}}</span>
+                                            <p @click="delcon(cKey)">
+                                              <img src="images/coloes.png?v={yun:}$config.cachecode{/yun}" alt="">
+                                            </p>
+                                        </div>
+                                        <div class="allReplyListTwo" v-if="conarr.length<3" @click="tabcon('')">
+                                            <p>新建+</p>
+                                        </div>
+                                    </div>
+                                    <div class="boxCtrlAllList" v-for="(item,cKey) in conarr" :key="item.id" v-show="item.id==conid">
+                                        <div class="boxCtrlAllListOne">
+                                            <p>消息类型：</p>
+                                            <input :name="'msgtype_'+item.id" :data-key="cKey" lay-filter="radio_type" value="text" :checked="item.msgtype=='text'?true:false" title="文字" type="radio" />
+                                            <input :name="'msgtype_'+item.id" :data-key="cKey" lay-filter="radio_type" value="image" :checked="item.msgtype=='image'?true:false" title="图片" type="radio" />
+                                            <input :name="'msgtype_'+item.id" :data-key="cKey" lay-filter="radio_type" value="xcx" :checked="item.msgtype=='xcx'?true:false" title="小程序卡片" type="radio" />
+                                        </div>
+                                        <div class="boxCtrlAllListtree">
+                                            <p>优先级别：</p>
+                                            <div class="listOneop">
+                                                <input class="input-text t_w480" type="text" :name="'sort_'+item.id" :id="'sort_'+item.id" size="30" :value="item.sort" :data-key="cKey" data-name="sort" @input="setconval" maxlength="255" placeholder="请输入优先级别">
+                                                <span class="admin_web_tip">数字越大级别越高，当其它自动回复有相同的关键字时，发送级别最高的那条。</span>
+                                            </div>
+                                        </div>
+                                        <!--文字类型-->
+                                        <div class="boxCtrlAllListFour" v-if="item.msgtype=='text'">
+                                            <p>回复内容：</p>
+                                            <div class="llListOneHui">
+                                                <textarea :name="'content_'+item.id" :id="'content_'+item.id" :value="item.content" :data-key="cKey" data-name="content" @input="setconval" rows="10" cols='40' maxlength="255" class="wx_search_textarea web_text_textarea" placeholder="请输入回复内容"></textarea>
+                                            </div>
+                                        </div>
+                                        <!--小程序卡片-->
+                                        <div class="boxCtrlAllListNine" v-if="item.msgtype=='xcx'">
+                                            <div class="llListNineFlex">
+                                                <p>卡片标题：</p>
+                                                <input class="input-text" type="text" :name="'xcx_title_'+item.id" :id="'xcx_title_'+item.id" size="30" :value="item.xcx_title" :data-key="cKey" data-name="xcx_title" @input="setconval" maxlength="255" placeholder="请输入卡片标题">
+                                            </div>
+                                            <div class="llListNineFlex">
+                                                <p>小程序AppID：</p>
+                                                <input class="input-text" type="text" :name="'xcx_appid_'+item.id" :id="'xcx_appid_'+item.id" size="30" :value="item.xcx_appid" :data-key="cKey" data-name="xcx_appid" @input="setconval" maxlength="255" placeholder="请输入小程序AppID">
+                                            </div>
+                                            <div class="llListNineFlex">
+                                                <p>小程序路径：</p>
+                                                <input class="input-text" type="text" :name="'xcx_pagepath_'+item.id" :id="'xcx_pagepath_'+item.id" size="30" :value="item.xcx_pagepath" :data-key="cKey" data-name="xcx_pagepath" @input="setconval" maxlength="255" placeholder="请输入跳转小程序页面 实例：pages/index/index">
+                                            </div>
+                                        </div>
+										<!--图片-->
+										<div class="boxCtrlAllListsix" v-show="item.msgtype=='image' || item.msgtype=='xcx'">
+										    <p>{{item.msgtype=='image' ? '图片' : '封面图'}}：</p>
+										    <div class="lListOnePhoto">
+										        <button :id="'imgupbtn'+item.id" type="button" class="yun_bth_pic noupload" :lay-data="'{ckey:'+cKey+'}'">上传图片</button>
+										        <img :src="item.image_n" width="35px" height="35px" :class="item.image_n?'':'none'">
+										        <input type="hidden" :name="'con_image_'+item.id" :value="item.newimage" />
+												<span class="admin_web_tip" v-if="item.msgtype=='xcx'">建议大小520*416，大小2M</span>
+										    </div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="admin_table_trbg adminTablButton">
+                                <div width="160">&nbsp;</div>
+                                <div align="left">
+                                    <input type="button" class="admin_button tty_sub" value="保存" @click="checkform"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}" />
+    </div>
+    <script>
+    var pytoken = $("#pytoken").val(),
+        form = null,
+        upload = null,
+        weburl = "{yun:}$config.sy_weburl{/yun}",
+        id = "{yun:}$smarty.get.id{/yun}";
+    var layaccept = 'images',
+        layexts = 'jpg|png|gif|bmp|jpeg';
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            id: id,
+            row: {},
+            conarr: [],
+            conid: '',
+
+            con_post: [],
+            del_idarr: [],
+
+        },
+        created: function() {
+            if (this.id) {
+                this.getInfo();
+            } else {
+                $("#app").show();
+            }
+
+        },
+        methods: {
+            getInfo: function() {
+                var self = this;
+                var tabcon_key = '';
+                parent.layer.load();
+
+                $.post("index.php?m=wx&c=getzdkeyword", {
+                    id: id,
+                    pytoken: pytoken
+                }, function(res) {
+                    $("#app").show();
+                    if (res && res.errcode == 9) {
+                        parent.layer.closeAll('loading');
+                        self.row = res.row;
+                        var conarr = res.row.conarr;
+                        for (let i in conarr) {
+                            conarr[i].isadd = 0;
+                        }
+                        
+                        self.conarr = conarr;
+                        tabcon_key = 0;
+
+                    }
+                    self.tabcon(tabcon_key);
+                }, 'json');
+            },
+            tabcon: function(ckey) {
+                var self = this;
+                self.conid = '';
+                var msgtype = 'text';
+                if (ckey !== '' && self.conarr[ckey]) {
+                    var con = self.conarr[ckey];
+                    self.conid = con.id;
+                    msgtype = con.msgtype;
+                } else {
+
+                    if (self.conarr.length >= 3) {
+                        layer.msg('最多只能添加3条消息！', 2, 8);
+                    }
+                    var randnum = parseInt(Math.random() * 1000);
+                    self.conarr.push({
+                        id: randnum,
+                        msgtype: 'text',
+                        msgtype_n: '文本',
+                        media_id: '',
+                        image_n: '',
+                        newimage: '',
+                        isadd: 1,
+						uploadInst: null
+                    });
+                    self.conid = randnum;
+                }
+                setTimeout(function() {
+                    form.render();
+                }, 50);
+            },
+            delcon: function(key) {
+                var self = this;
+                var conarr = self.conarr;
+                var del_idarr = [];
+                if (conarr[key].isadd == 0) {
+                    del_idarr.push(conarr[key].id);
+                }
+                self.del_idarr = del_idarr;
+                self.conarr.splice(key, 1);
+            },
+            setconval: function(e) {
+
+                var self = this;
+                var key = e.target.dataset.key;
+                var name = e.target.dataset.name;
+                var value = $.trim(e.target.value);
+
+                self.conarr[key][name] = value;
+
+            },
+            addNewImg: function(key, base) {
+                var self = this;
+
+                self.conarr[key].image_n = base;
+                self.conarr[key].newimage = base;
+
+
+            },
+            checkform: function() {
+                var self = this;
+                var conarr = self.conarr;
+
+                var id = '';
+                var msgtype = '';
+                var errmsg = '';
+                var isadd = 0;
+                var con_post = [];
+
+                if ($.trim($("#title").val()) == '') {
+
+                    parent.layer.msg('规则名不能为空！', 2, 8);
+                    return false;
+                } else if ($.trim($("#keyword").val()) == '') {
+
+                    parent.layer.msg('关键字不能为空！', 2, 8);
+                    return false;
+                }
+
+                for (let i in conarr) {
+
+                    errmsg = '消息' + parseInt(i + 1) + '的';
+
+                    id = conarr[i].id;
+
+                    msgtype = conarr[i].msgtype;
+
+                    isadd = conarr[i].isadd;
+
+                    var conval = {
+                        id: id,
+                        msgtype: msgtype,
+                        isadd: isadd,
+                        sort: conarr[i].sort
+                    };
+
+                    if (msgtype == 'image') {
+
+                        if (conarr[i].media_id == '' && conarr[i].newimage == '') {
+                            parent.layer.msg(errmsg + '图片不能为空！', 2, 8);
+                            return false;
+                        }
+                        conval.newimage = conarr[i].newimage;
+                        conval.media_id = conarr[i].media_id;
+
+                    } else if (msgtype == 'xcx') {
+
+                        if (conarr[i].xcx_title == '') {
+                            parent.layer.msg(errmsg + '卡片标题不能为空！', 2, 8);
+                            return false;
+                        }
+                        if (conarr[i].xcx_appid == '') {
+                            parent.layer.msg(errmsg + '小程序AppID不能为空！', 2, 8);
+                            return false;
+                        }
+                        if (conarr[i].xcx_pagepath == '') {
+                            parent.layer.msg(errmsg + '小程序路径不能为空！', 2, 8);
+                            return false;
+                        }
+                        if (conarr[i].media_id == '' && conarr[i].newimage == '') {
+                            parent.layer.msg(errmsg + '小程序封面图不能为空！', 2, 8);
+                            return false;
+                        }
+
+                        conval.xcx_title = conarr[i].xcx_title;
+                        conval.xcx_appid = conarr[i].xcx_appid;
+                        conval.xcx_pagepath = conarr[i].xcx_pagepath;
+                        conval.newimage = conarr[i].newimage;
+                        conval.media_id = conarr[i].media_id;
+                        conval.image_n = conarr[i].image_n;
+
+                    } else {
+
+                        if (conarr[i].content == '') {
+                            parent.layer.msg(errmsg + '文本内容不能为空！', 2, 8);
+                            return false;
+                        }
+
+                        conval.content = conarr[i].content;
+                    }
+
+                    con_post.push(conval);
+
+                    self.con_post = con_post;
+                }
+                self.saveform();
+
+            },
+
+            saveform: function() {
+                var self = this;
+                var con_post = deepClone(self.con_post);
+                
+                for(let i in con_post){
+                    if(con_post[i].msgtype == 'text'){
+                        con_post[i].content = con_post[i].content.replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+                    }else if(con_post[i].msgtype == 'xcx'){
+                        con_post[i].xcx_title = con_post[i].xcx_title.replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+                    }
+                }
+                
+
+                var conpost = JSON.stringify(con_post);
+                loadlayer();
+                $.post("index.php?m=wx&c=saveZdKeyword", {
+                    id: self.id,
+                    title: $.trim($("#title").val()),
+                    keyword: $.trim($("#keyword").val()),
+                    content: conpost,
+                    del_idarr: self.del_idarr,
+                    pytoken: pytoken
+                }, function(res) {
+                    parent.layer.closeAll('loading');
+                    if (res && res.errcode == 9) {
+                        parent.layer.msg(res.errmsg, 2, 9, function() {
+                            location.href = 'index.php?m=wx&c=zdkeyword';
+                        });
+                    } else {
+                        parent.layer.msg(res.errmsg, 2, 8);
+                    }
+                }, 'json');
+            }
+        }
+    });
+    layui.use(['layer', 'form', 'upload'], function() {
+        form = layui.form;
+        upload = layui.upload;
+
+        var layer = layui.layer,
+            $ = layui.$;
+
+        form.on('radio(radio_type)', function(data) {
+            var msgtype = data.value;
+            var ckey = data.elem.dataset.key;
+            var msgtype_n = '文本';
+            if (msgtype == 'image') {
+                msgtype_n = '图片';
+            } else if (msgtype == 'xcx') {
+                msgtype_n = '小程序卡片';
+            }
+            app.$data.conarr[ckey].msgtype = msgtype;
+            app.$data.conarr[ckey].msgtype_n = msgtype_n;
+
+            if (msgtype == 'image' || msgtype == 'xcx') {
+                var id = app.$data.conarr[ckey].id;
+                setTimeout(function() {
+					if(!app.$data.conarr[ckey].uploadInst){
+						// 首次加载
+						imgrender(id, ckey);
+					}
+                }, 50);
+            }
+        });
+    });
+
+    function imgrender(id, imgkey) {
+
+        var imgChooseFun = {
+            elem: '#imgupbtn' + id,
+            auto: false,
+            accept: layaccept,
+            exts: layexts,
+            choose: function(obj) {
+
+                var ckey = this.ckey;
+
+                obj.preview(function(index, file, result) {
+                    app.addNewImg(ckey, result);
+
+                });
+            }
+        };
+
+        app.$data.conarr[imgkey].uploadInst = upload.render(imgChooseFun);
+    }
+    </script>
+</body>
+
+</html>

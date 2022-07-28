@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"/>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<!--<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>-->
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+{yun:}if $type=="tj"{/yun}
+	<div class="admin_atatic_chart fl" id="main2" style="height:300px;"></div>
+    <script src="js/echarts_plain.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main2'));
+
+		var legendData = JSON.parse('{yun:}$name{/yun}');
+		var tjlist = JSON.parse('{yun:}$list{/yun}');
+
+		var xAxisData = [],
+			seriesList = [],
+			seriesObj = {},
+			seriesData = [],
+			seriesColor = [
+				'rgb(224, 108, 104)',
+				'rgb(191,227,249)',
+				'rgb(146, 196, 202)',
+				'rgb(237, 205, 193)'
+			];
+		tjlist.forEach(function (item, key) {
+			$(".tj-name").eq(key).text(legendData[key]);
+			$(".tj-num").eq(key).text(item.count);
+			$(".tj-count").eq(key).show();
+			seriesData = [];
+			for (let sdkey in item.list) {
+				if (key == 0) {
+					xAxisData.push(item.list[sdkey].td);
+				}
+				seriesData.push(item.list[sdkey].cnt);
+			}
+
+			seriesObj = {
+				name: legendData[key],
+				type:'line',
+				symbol:'emptyCircle',
+				// smooth: true,
+				itemStyle: {
+					normal: {
+						areaStyle: {
+							width: 2,
+							color: seriesColor[key]
+						}
+					}
+				},
+				data: seriesData
+			};
+			seriesList.push(seriesObj);
+		})
+
+        var option = {
+			tooltip: {trigger: 'axis'},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '12%',
+				containLabel: true
+			},
+			legend: {
+				data: legendData
+			},
+			calculable: false,
+			xAxis: [
+				{
+					type: 'category',
+					boundaryGap: false,
+					data: xAxisData
+				}
+			],
+			yAxis: [{type: 'value', minInterval: 1}],
+			series: seriesList
+		};
+        myChart.setOption(option); // 为echarts对象加载数据 
+        setTimeout(function () {
+            window.addEventListener("resize", () => {
+                myChart.resize();
+            });
+        }, 200);
+    </script>
+    
+{yun:}elseif ($type=="dt"){/yun}
+<ul class="right_web_list">
+{yun:}foreach name=$name from=$list item=v{/yun}
+<li>会员
+<!--下载简历-->
+{yun:}if $v.downtime{/yun}
+{yun:}$v.comusername{/yun}
+{yun:}/if{/yun}
+
+{yun:}if $v.order_time{/yun}
+{yun:}$v.username{/yun}
+{yun:}/if{/yun}
+
+{yun:}if $v.jobid || $v.job_id{/yun}
+{yun:}$v.username{/yun}
+{yun:}/if{/yun}
+
+{yun:}if $v.resume_id{/yun}
+{yun:}$v.comusername{/yun}
+{yun:}/if{/yun}
+
+在
+
+{yun:}if $v.downtime{/yun}
+{yun:}if $v.time<60{/yun} <span style="color:red;">{yun:}$v.time{/yun}</span> {yun:}else{/yun}{yun:}$v.time{/yun}{yun:}/if{/yun}
+{yun:}/if{/yun}
+{yun:}if $v.datetime{/yun}
+{yun:}if $v.times<60{/yun} <span style="color:red;">{yun:}$v.times{/yun}</span> {yun:}else{/yun}{yun:}$v.times{/yun}{yun:}/if{/yun}
+{yun:}/if{/yun}
+{yun:}if $v.order_time{/yun}
+{yun:}if $v.timess<60{/yun} <span style="color:red;">{yun:}$v.timess{/yun}</span> {yun:}else{/yun}{yun:}$v.timess{/yun}{yun:}/if{/yun}
+{yun:}/if{/yun}
+
+{yun:}if $v.downtime{/yun}
+下载了 {yun:}$v.username{/yun} 的简历
+{yun:}/if{/yun}
+
+{yun:}if $v.job_name{/yun}
+{yun:}if $v.eid{/yun}申请了{yun:}else{/yun}收藏了{yun:}/if{/yun} {yun:}$v.job_name{/yun} 职位
+{yun:}/if{/yun}
+
+{yun:}if $v.jobid{/yun}
+浏览了 {yun:}$v.jobname{/yun} 职位
+{yun:}/if{/yun}
+
+{yun:}if $v.resume_id{/yun}
+浏览了 {yun:}$v.username{/yun} 简历
+{yun:}/if{/yun}
+
+{yun:}if $v.order_time{/yun}
+充值了 {yun:}$v.order_price{/yun}
+{yun:}/if{/yun}
+</li>
+{yun:}/foreach{/yun}
+</ul>
+
+{yun:}elseif ($type=="rz"){/yun}
+
+<ul class="right_web_list">
+{yun:}foreach name=$name from=$list item=v{/yun}
+<li>会员 {yun:}$v.username{/yun} 在
+{yun:}if $v.ctime{/yun}
+{yun:}if $v.time<60{/yun} <span style="color:red;">{yun:}$v.time{/yun}</span> {yun:}else{/yun}{yun:}$v.time{/yun}{yun:}/if{/yun}
+{yun:}/if{/yun}
+{yun:}$v.content{/yun}</li>
+{yun:}/foreach{/yun}
+</ul>
+{yun:}/if{/yun}
+</body>
+</html>

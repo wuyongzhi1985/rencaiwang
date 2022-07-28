@@ -1,0 +1,109 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+
+		<div class="m_header"><div class="m_header_cont">消息</div></div>
+		 
+			<!-- 页面整体部分 -->
+			<div class="min_body ">
+				<!-- 滑动模块 -->
+			   <div class="card msg_header_pd">
+				   <ul>
+					   <li data-url="invite" class="navigetali">
+						   <div class="card_logo">
+							   <img src="{yun:}$wap_style{/yun}/images/resume.png" alt="" width="100%" height="100%">
+								<div id="wkyqnum" class="card_logo_circle" style="display: none;">
+									<span id="wkyqnum_n" style="background: #f30; padding: 0.03rem 0.15rem;border-radius: 20px; color: #fff;"></span>
+								</div>
+						   </div>
+						   <i class="card_word">面试通知</i>
+					   </li>
+					   <li data-url="sq" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/copy.png" alt="" width="100%" height="100%">
+						</div>
+						<i class="card_word">投递反馈</i>
+					   </li>
+					   {yun:}if $config.com_message{/yun}
+					   <li data-url="commsg" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/genius_consult.png" alt="" width="100%" height="100%">
+							<div id="commsgnum" class="card_logo_circle" style="display: none;">
+								<span id="commsgnum_n" style="background: #f30; padding: 0.03rem 0.15rem;border-radius: 20px; color: #fff;"></span>
+							</div>
+						</div>
+						<i class="card_word">职位咨询</i>
+					   </li>
+					   {yun:}/if{/yun}
+					   <li data-url="sxnews" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/sixin.png" alt="" width="100%" height="100%">
+							<div id="sxnum" class="card_logo_circle" style="display: none;">
+								<span id="sxnum_n" style="background: #f30; padding: 0.03rem 0.15rem;border-radius: 20px; color: #fff;"></span>
+							</div>
+						</div>
+						<i class="card_word">系统消息</i>
+					   </li>
+				   </ul>
+			   </div>
+			   
+			</div>
+			<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$wap_style{/yun}/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$config_wapdomain{/yun}/js/vant/lib/vant.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$config_wapdomain{/yun}/js/vant/phpyun_vant.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script>
+				var sysapp = new Vue({
+					el: '#sysChatbox',
+					data: {
+						allchat: [],
+						newchat: [],
+						oldchat: [],
+						chatCate: 'all',
+					},
+					created() {
+						this.getSysmsg();
+					},
+					methods:{
+						getSysmsg() {
+							var self = this;
+							$.post('{yun:}url d=wxapp h=user m=msg c=sysnews{/yun}', {rand: Math.random()}, function(data){
+								var res = data.data;
+								if(res.sxnum > 0){
+									$("#sxnum_n").text(res.sxnum);
+									$("#sxnum").css('display', 'flex');
+								}
+								if(res.wkyqnum > 0){
+									$("#wkyqnum_n").text(res.wkyqnum);
+									$("#wkyqnum").css('display', 'flex');
+								}
+								if(res.commsgnum > 0){
+									$("#commsgnum_n").text(res.commsgnum);
+									$("#commsgnum").css('display', 'flex');
+								}
+							}, 'json');
+						}
+					}
+				});
+				var wapurl = '{yun:}url m=wap{/yun}',
+					mine = {usertype:"{yun:}$usertype{/yun}"},
+					apage = 0,
+					npage = 0,
+					opage = 0,
+					newshow = false,
+					oldshow = false;
+				
+				var needRefresh = window.sessionStorage.getItem("needRefresh");
+				if(needRefresh!='false' && needRefresh){
+					window.sessionStorage.setItem("needRefresh", false);
+					location.reload();
+				}
+				$(function () {
+					typeof fetchData !== 'undefined' && fetchData();
+					// 消息页面-顶部导航点击
+					$(".navigetali").on("click", function() {
+						var url = $(this).attr('data-url');
+						window.location.href = wapurl + 'member/index.php?c=' + url + '&chat=1';
+					});
+				});
+			</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

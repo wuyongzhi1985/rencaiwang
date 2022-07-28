@@ -1,0 +1,18 @@
+User-agent: *
+Disallow: /admin_jnrc/
+Disallow: /siteadmin/
+Disallow: /wapadmin/
+Disallow: /api/
+Disallow: /data/
+Disallow: /config/
+Disallow: /install_bak123/
+Disallow: /member/
+Disallow: /app/
+Disallow: /js/
+Disallow: /weixin/
+Disallow: /error/
+Disallow: /job/*search*
+Disallow: /resume/*search*
+
+Disallow: /job/*all=*
+Disallow: /resume/*all=*

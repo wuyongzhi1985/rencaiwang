@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet"/>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+	<!--<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>-->
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm">
+	<div>
+		<div style="overflow: hidden;">
+			<h3 style="margin-bottom: 12px;">用户数据统计趋势图</h3>
+			<div class="echartsOne">
+				<div id="main1" style="height:360px; width: 49%;float: left;"></div>
+				<div id="main2" style="height:360px;  width: 49%;float: right;"></div>
+			</div>
+		</div>
+		<div style="overflow: hidden;">
+			<h3 style="margin-bottom: 12px;">企业数据统计趋势图</h3>
+			<div class="echartsTwo">
+				<div id="main3" style="height:360px;width: 49%;float: left;"></div>
+				<div id="main4" style="height:360px;width: 49%;float: right;"></div>
+			</div>
+			<div class="echartsTwo">
+				<div id="main5" style="height:360px;width: 49%;float: left;"></div>
+				<div id="main6" style="height:360px;width: 49%;float: right;"></div>
+			</div>
+			<div class="echartsTwo">
+				<div id="main7" style="height:360px;width: 49%;float: left;"></div>
+			</div>
+		</div>
+	</div>
+    <script src="js/echarts_plain.js?v={yun:}$config.cachecode{/yun}"></script>
+    <script type="text/javascript">
+        var myChart1 = echarts.init(document.getElementById('main1'));
+        var option1 = {
+				title: {
+					text: '用户/简历趋势对比图',
+					textStyle: {
+						fontSize: 14
+					}
+				},
+        		tooltip : {trigger: 'axis'},
+        		legend: {data:['{yun:}$list["adduser"]["name"]{/yun}','{yun:}$list["addexpect"]["name"]{/yun}']},
+    			calculable : false,
+			    xAxis : [
+			        {
+			            type : 'category',
+			            boundaryGap : false,
+			            data : [{yun:}foreach name=uxfoo from=$list['adduser']['list'] item=uxdaylist{/yun}{yun:}if $smarty.foreach.uxfoo.index>0{/yun},{yun:}/if{/yun}'{yun:}$uxdaylist.date{/yun}'{yun:}/foreach{/yun}]
+			        }
+			    ],
+    			yAxis : [{type : 'value',minInterval: 1}],
+			    series : [
+			        {
+			            name:'{yun:}$list["adduser"]["name"]{/yun}',
+			            type:'line',
+			            symbol:'emptyCircle',
+			            smooth: true,
+			            itemStyle: {
+			                normal: {
+			                    areaStyle: {
+			                        width: 2,
+									color:'rgb(224, 108, 104)'
+								}
+			                }
+			            },
+			            data:[{yun:}foreach name=uxfoo1 from=$list['adduser']['list'] item=uxdaylist1{/yun}{yun:}if $smarty.foreach.uxfoo1.index>0{/yun},{yun:}/if{/yun}{yun:}$uxdaylist1.count{/yun}{yun:}/foreach{/yun}]
+			        },
+					{
+					    name:'{yun:}$list["addexpect"]["name"]{/yun}',
+			            type:'line',
+			            symbol:'emptyCircle',
+			            smooth: true,
+			            itemStyle: {
+			                normal: {
+			                    areaStyle: {
+			                        width: 2,
+									color:'rgb(191,227,249)'
+								}
+			                }
+			            },
+			            data:[{yun:}foreach name=uxfoo2 from=$list['addexpect']['list'] item=uxdaylist2{/yun}{yun:}if $smarty.foreach.uxfoo2.index>0{/yun},{yun:}/if{/yun}{yun:}$uxdaylist2.count{/yun}{yun:}/foreach{/yun}]
+					}
+			    ]
+			};
+        myChart1.setOption(option1); // 为echarts对象加载数据
+
+		var myChart2 = echarts.init(document.getElementById('main2'));
+		var option2 = {
+			title: {
+				text: '简历投递/刷新趋势对比图',
+				textStyle: {
+					fontSize: 14
+				}
+			},
+			tooltip : {trigger: 'axis'},
+			legend: {data:['{yun:}$list["resumeDelivery"]["name"]{/yun}','{yun:}$list["resumeRefresh"]["name"]{/yun}']},
+			calculable : false,
+			xAxis : [
+				{
+					type : 'category',
+					boundaryGap : false,
+					data : [{yun:}foreach name=rfoo from=$list['resumeDelivery']['list'] item=daylist{/yun}{yun:}if $smarty.foreach.rfoo.index>0{/yun},{yun:}/if{/yun}'{yun:}$daylist.date{/yun}'{yun:}/foreach{/yun}]
+				}
+			],
+			yAxis : [{type : 'value',minInterval: 1}],
+			series : [
+				{
+					name:'{yun:}$list["resumeDelivery"]["name"]{/yun}',
+					type:'line',
+					symbol:'emptyCircle',
+					smooth: true,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								width: 2,
+								color:'rgb(224, 108, 104)'
+							}
+						}
+					},
+					data:[{yun:}foreach name=rfoo1 from=$list['resumeDelivery']['list'] item=rdaylist1{/yun}{yun:}if $smarty.foreach.rfoo1.index>0{/yun},{yun:}/if{/yun}{yun:}$rdaylist1.count{/yun}{yun:}/foreach{/yun}]
+				},
+				{
+					name:'{yun:}$list["resumeRefresh"]["name"]{/yun}',
+					type:'line',
+					symbol:'emptyCircle',
+					smooth: true,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								width: 2,
+								color:'rgb(191,227,249)'
+							}
+						}
+					},
+					data:[{yun:}foreach name=rfoo2 from=$list['resumeRefresh']['list'] item=rdaylist2{/yun}{yun:}if $smarty.foreach.rfoo2.index>0{/yun},{yun:}/if{/yun}{yun:}$rdaylist2.count{/yun}{yun:}/foreach{/yun}]
+				}
+			]
+		};
+		myChart2.setOption(option2); // 为echarts对象加载数据
+
+		var myChart3 = echarts.init(document.getElementById('main3'));
+		var option3 = {
+			title: {
+				text: '企业/职位趋势对比图',
+				textStyle: {
+					fontSize: 14
+				}
+			},
+			tooltip : {trigger: 'axis'},
+			legend: {data:['{yun:}$list["addcom"]["name"]{/yun}','{yun:}$list["addjob"]["name"]{/yun}']},
+			calculable : false,
+			xAxis : [
+				{
+					type : 'category',
+					boundaryGap : false,
+					data : [{yun:}foreach name=cjfoo from=$list['addcom']['list'] item=cjdaylist{/yun}{yun:}if $smarty.foreach.cjfoo.index>0{/yun},{yun:}/if{/yun}'{yun:}$cjdaylist.date{/yun}'{yun:}/foreach{/yun}]
+				}
+			],
+			yAxis : [{type : 'value',minInterval: 1}],
+			series : [
+				{
+					name:'{yun:}$list["addcom"]["name"]{/yun}',
+					type:'line',
+					symbol:'emptyCircle',
+					smooth: true,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								width: 2,
+								color:'rgb(224, 108, 104)'
+							}
+						}
+					},
+					data:[{yun:}foreach name=cjfoo1 from=$list['addcom']['list'] item=cjdaylist1{/yun}{yun:}if $smarty.foreach.cjfoo1.index>0{/yun},{yun:}/if{/yun}{yun:}$cjdaylist1.count{/yun}{yun:}/foreach{/yun}]
+				},
+				{
+					name:'{yun:}$list["addjob"]["name"]{/yun}',
+					type:'line',
+					symbol:'emptyCircle',
+					smooth: true,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								width: 2,
+								color:'rgb(191,227,249)'
+							}
+						}
+					},
+					data:[{yun:}foreach name=cjfoo2 from=$list['addjob']['list'] item=cjdaylist2{/yun}{yun:}if $smarty.foreach.cjfoo2.index>0{/yun},{yun:}/if{/yun}{yun:}$cjdaylist2.count{/yun}{yun:}/foreach{/yun}]
+				}
+			]
+		};
+		myChart3.setOption(option3); // 为echarts对象加载数据
+
+		var myChart4 = echarts.init(document.getElementById('main4'));
+		var option4 = {
+			title: {
+				text: '{yun:}$list["downResume"]["name"]{/yun}统计',
+				textStyle: {
+					fontSize: 14
+				}
+			},
+			tooltip : {trigger: 'axis'},
+			legend: {data:['{yun:}$list["downResume"]["name"]{/yun}','{yun:}$list["jobRefresh"]["name"]{/yun}','{yun:}$list["inviteInterview"]["name"]{/yun}']},
+			calculable : false,
+			xAxis : [
+				{
+					type : 'category',
+					boundaryGap : false,
+					data : [{yun:}foreach name=dfoo from=$list['downResume']['list'] item=ddaylist{/yun}{yun:}if $smarty.foreach.dfoo.index>0{/yun},{yun:}/if{/yun}'{yun:}$ddaylist.date{/yun}'{yun:}/foreach{/yun}]
+				}
+			],
+			yAxis : [{type : 'value',minInterval: 1}],
+			series : [
+				{
+					name:'{yun:}$list["downResume"]["name"]{/yun}',
+					type:'line',
+					symbol:'emptyCircle',
+					smooth: true,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								width: 2,
+								color:'rgb(224, 108, 104)'
+							}
+						}
+					},
+					data:[{yun:}foreach name=dfoo1 from=$list['downResume']['list'] item=ddaylist1{/yun}{yun:}if $smarty.foreach.dfoo1.index>0{/yun},{yun:}/if{/yun}{yun:}$ddaylist1.count{/yun}{yun:}/foreach{/yun}]
+				}
+			]
+		};
+		myChart4.setOption(option4); // 为echarts对象加载数据
+
+		var myChart5 = echarts.init(document.getElementById('main5'));
+		var option5 = {
+			title: {
+				text: '{yun:}$list["jobRefresh"]["name"]{/yun}统计',
+				textStyle: {
+					fontSize: 14
+				}
+			},
+			tooltip : {trigger: 'axis'},
+			legend: {data:['{yun:}$list["jobRefresh"]["name"]{/yun}']},
+			calculable : false,
+			xAxis : [
+				{
+					type : 'category',
+					boundaryGap : false,
+					data : [{yun:}foreach name=jrfoo from=$list['jobRefresh']['list'] item=jrdaylist{/yun}{yun:}if $smarty.foreach.jrfoo.index>0{/yun},{yun:}/if{/yun}'{yun:}$jrdaylist.date{/yun}'{yun:}/foreach{/yun}]
+				}
+			],
+			yAxis : [{type : 'value',minInterval: 1}],
+			series : [
+				{
+					name:'{yun:}$list["jobRefresh"]["name"]{/yun}',
+					type:'line',
+					symbol:'emptyCircle',
+					smooth: true,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								width: 2,
+								color:'rgb(224, 108, 104)'
+							}
+						}
+					},
+					data:[{yun:}foreach name=jrfoo2 from=$list['jobRefresh']['list'] item=jrdaylist2{/yun}{yun:}if $smarty.foreach.jrfoo2.index>0{/yun},{yun:}/if{/yun}{yun:}$jrdaylist2.count{/yun}{yun:}/foreach{/yun}]
+				}
+			]
+		};
+		myChart5.setOption(option5); // 为echarts对象加载数据
+
+		var myChart6 = echarts.init(document.getElementById('main6'));
+		var option6 = {
+			title: {
+				text: '{yun:}$list["inviteInterview"]["name"]{/yun}统计',
+				textStyle: {
+					fontSize: 14
+				}
+			},
+			tooltip : {trigger: 'axis'},
+			legend: {data:['{yun:}$list["inviteInterview"]["name"]{/yun}']},
+			calculable : false,
+			xAxis : [
+				{
+					type : 'category',
+					boundaryGap : false,
+					data : [{yun:}foreach name=iifoo from=$list['inviteInterview']['list'] item=iidaylist{/yun}{yun:}if $smarty.foreach.iifoo.index>0{/yun},{yun:}/if{/yun}'{yun:}$iidaylist.date{/yun}'{yun:}/foreach{/yun}]
+				}
+			],
+			yAxis : [{type : 'value',minInterval: 1}],
+			series : [
+				{
+					name:'{yun:}$list["inviteInterview"]["name"]{/yun}',
+					type:'line',
+					symbol:'emptyCircle',
+					smooth: true,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								width: 2,
+								color:'rgb(224, 108, 104)'
+							}
+						}
+					},
+					data:[{yun:}foreach name=iifoo3 from=$list['inviteInterview']['list'] item=iidaylist3{/yun}{yun:}if $smarty.foreach.iifoo3.index>0{/yun},{yun:}/if{/yun}{yun:}$iidaylist3.count{/yun}{yun:}/foreach{/yun}]
+				}
+			]
+		};
+		myChart6.setOption(option6); // 为echarts对象加载数据
+
+		var myChart7 = echarts.init(document.getElementById('main7'));
+		var option7 = {
+			title: {
+				text: '{yun:}$list["chat"]["name"]{/yun}统计',
+				textStyle: {
+					fontSize: 14
+				}
+			},
+			tooltip : {trigger: 'axis'},
+			legend: {data:['{yun:}$list["chat"]["name"]{/yun}']},
+			calculable : false,
+			xAxis : [
+				{
+					type : 'category',
+					boundaryGap : false,
+					data : [{yun:}foreach name=cfoo from=$list['chat']['list'] item=cdaylist{/yun}{yun:}if $smarty.foreach.cfoo.index>0{/yun},{yun:}/if{/yun}'{yun:}$cdaylist.date{/yun}'{yun:}/foreach{/yun}]
+				}
+			],
+			yAxis : [{type : 'value',minInterval: 1}],
+			series : [
+				{
+					name:'{yun:}$list["chat"]["name"]{/yun}',
+					type:'line',
+					symbol:'emptyCircle',
+					smooth: true,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								width: 2,
+								color:'rgb(224, 108, 104)'
+							}
+						}
+					},
+					data:[{yun:}foreach name=cfoo3 from=$list['chat']['list'] item=cdaylist3{/yun}{yun:}if $smarty.foreach.cfoo3.index>0{/yun},{yun:}/if{/yun}{yun:}$cdaylist3.count{/yun}{yun:}/foreach{/yun}]
+				}
+			]
+		};
+		myChart7.setOption(option7); // 为echarts对象加载数据
+
+        setTimeout(function () {
+            window.addEventListener("resize", () => {
+                myChart1.resize();
+				myChart2.resize();
+				myChart3.resize();
+				myChart4.resize();
+				myChart5.resize();
+				myChart6.resize();
+				myChart7.resize();
+            });
+        }, 200);
+    </script>
+</body>
+</html>

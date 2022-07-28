@@ -1,0 +1,264 @@
+:root {
+    --font-6: 0.16rem;
+    --font-8: 0.21333rem;
+    --font-9: 0.24rem;
+    --font-10: 0.26666rem;
+    --font-12: 0.32rem;
+    --font-13: 0.346666rem;
+    --font-14: 0.3777rem;
+    --font-15: 0.4rem;
+    --font-16: 0.42222rem;
+    --font-18: 0.48rem;
+    --font-20: 0.53333rem;
+    --font-22: 0.586666rem;
+    --font-24: 0.64rem;
+    --font-28: 0.74666rem;
+    --font-30: 0.8rem;
+    --font-32: 0.853333rem;
+    --font-35: 0.93333rem;
+    --font-40: 1.06666rem;
+    --font-45: 1.2rem;
+    --font-50: 1.333333rem;
+    --font-60: 1.6rem;
+    --font-65: 1.73333rem;
+    --font-70: 1.866666rem;
+    --font-80: 2.133333rem;
+    --font-90: 2.4rem;
+    --font-100: 2.6666rem;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body,
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    background: #F2F2F2;
+}
+
+a,
+li {
+    list-style: none;
+    text-decoration: none;
+}
+
+a {
+    color: var(--font-color-black);
+    font-size: var(--font-14);
+}
+
+a:hover {
+    color: var(--font-color-blue);
+}
+
+button,
+input {
+    border: none;
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+section {
+    position: relative;
+    overflow: hidden;
+}
+
+/***
+ * _ooOoo_
+ * o8888888o
+ * 88" . "88
+ * (| -_- |)
+ *  O\ = /O
+ * ___/`---'\____
+ * .   ' \\| |// `.
+ * / \\||| : |||// \
+ * / _||||| -:- |||||- \
+ * | | \\\ - /// | |
+ * | \_| ''\---/'' | |
+ * \ .-\__ `-` ___/-. /
+ * ___`. .' /--.--\ `. . __
+ * ."" '< `.___\_<|>_/___.' >'"".
+ * | | : `- \`.;`\ _ /`;.`/ - ` : | |
+ * \ \ `-. \_ __\ /__ _/ .-` / /
+ * ======`-.____`-.___\_____/___.-`____.-'======
+ * `=---='
+ *          .............................................
+ *           佛曰：bug泛滥，我已瘫痪！
+ */
+.specialDirec{
+    overflow: hidden;
+    position: absolute;
+    top: 0.2rem;
+    left: 0.2rem;
+    z-index: 22;
+}
+.specialDirec a{
+    display: block;
+    width: 0.633rem;
+}
+.specialPhoto img {
+    width: 100%;
+    height: auto;
+}
+
+.specialSubject {
+    margin: 0.3rem;
+    /*height: 70vh;*/
+    height: calc(70vh - 2rem);
+    overflow-y: scroll;
+}
+
+.specialSubject ul {
+    overflow: hidden;
+}
+
+.specialSubject ul li{
+    overflow: hidden;
+    background: #fff;
+    border-radius: 0.2rem;
+    padding: 0.2666rem;
+    margin-bottom: 0.3rem;
+}
+.specialSubject ul li a{
+    display: block;
+}
+.specialSubject ul li .specialSubjectOne{
+    overflow: hidden;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo{
+    overflow: hidden;
+    /*width: 6rem;*/
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo .oneInfoTitle{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.26666rem;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo .oneInfoTitleMoney{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-18);
+    font-weight: bold;
+    color: #ff4c52;
+    padding-top: 2px;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo .oneInfoTitle p{
+    font-size: var(--font-18);
+    margin-right: 0.2rem;
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo .oneInfoTitle img{
+    width: var(--font-18);
+    margin-right: 0.2rem;
+}
+.specialSubject ul li .specialSubjectOne .twoInfoNam{
+    color: #666;
+    font-size: var(--font-14);
+    padding-bottom: var(--font-10);
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo .oneInfoMoney{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    margin: 0.2rem 0;
+    font-size: var(--font-14);
+    color: #FF667F;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo .oneInfoMap{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    color: #999;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo .oneInfoMap p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneInfo .oneInfoMap img{
+    width: var(--font-16);
+    margin-left: 0.2rem;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneShow{
+    overflow: hidden;
+}
+.specialSubject ul li .specialSubjectOne .specialSubjectOneShow span{
+    display: block;
+    width: 2rem;
+    line-height: var(--font-35);
+    background: #E9F1FF;
+    text-align: center;
+    border-radius: 0.5rem;
+    color: #2778F8;
+}
+.specialSubject ul li .specialSubjectTwo{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: 0.95rem;
+    padding-bottom: var(--font-10);
+}
+.specialSubject ul li .specialSubjectTwo span{
+    display: block;
+    padding: 0.1rem 0.23rem;
+    background: #F7F9FA;
+    color: #666;
+    margin-right: 0.3rem;
+    border-radius: 0.2rem;
+    font-size: var(--font-13);
+    margin-bottom: var(--font-10);
+}
+
+.buttonSpecial{
+    background: #fff;
+    overflow: hidden;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.4rem;
+    justify-content: space-between;
+}
+.buttonSpecial button{
+    background: #f74545;
+    background: linear-gradient(270deg, #f60, #f60, #f74545);
+    height: 1rem;
+    width: 4rem;
+    border-radius: 0.55rem;
+    font-size: 0.377rem;
+    color: #fff;
+}
+.buttonSpecial .bottonOne{
+    background: #2778f8;
+    background: linear-gradient(270deg, #19b7ff, #2778f8, #2778f8);
+}
+/* 控制尺寸 */
+@media (max-width: 375px) {
+    .specialSubject{
+        /*height: 63vh;*/
+        height: calc(63vh - 2rem);
+    }
+}

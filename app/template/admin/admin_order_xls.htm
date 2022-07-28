@@ -1,0 +1,30 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>PHP output Excel Example</title>
+</head>
+<table width="100%" border="1">
+    <tr>
+		<th>编号</th>
+		<th>用户名称</th>
+		<th>公司名称（姓名）</th>
+		<th>充值单号</th>
+		<th>支付类型</th>
+		<th>订单类型</th>
+		<th>订单金额</th>
+		<th>时间</th>
+		<th>状态</th>
+    </tr>
+    {yun:}foreach item=v key=key from=$list{/yun}
+    <tr>
+			<td>{yun:}$v.id{/yun}</td>
+			<td>{yun:}$v.username{/yun}</td>
+			<td>{yun:}$v.comname{/yun}</td>
+			<td style="vnd.ms-excel.numberformat:@"> {yun:}$v.order_id{/yun} </td>
+			<td>{yun:}$v.order_type_n{/yun}</td>
+			<td>{yun:}$v.type_n{/yun}</td>
+			<td>{yun:}$v.order_price{/yun}</td>
+			<td>{yun:}$v.order_time|date_format:"%Y-%m-%d %H:%M"{/yun}</td>
+			<td>{yun:}$v.order_state_n{/yun}</td>
+    </tr>
+    {yun:}/foreach{/yun}
+    </table>

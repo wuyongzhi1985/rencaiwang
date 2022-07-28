@@ -1,0 +1,1091 @@
+{yun:}include file="$wapstyle/header.htm"{/yun}
+
+<!-- 页面头部导航栏 -->
+<div class="jobshwheader">
+    <div class="jobshwheader_nav">
+        <div class="jobshwheader_nav_left">
+            <a href="{yun:}if $backurl{/yun}{yun:}$backurl{/yun}{yun:}else{/yun}javascript:goBack();{yun:}/if{/yun}" class="jobshwheader_nav_left_return">
+                <img src="{yun:}$wap_style{/yun}/images/nav_icon_return.png" alt="" style="width: 100%;">
+            </a>
+            <span class="jobshwheader_p"> 职位详情</span>
+        </div>
+        <div class="jobshwheader_nav_right">
+            <ul>
+                {yun:}if $job.fav_job{/yun}
+                <li onclick="cancelFavJob('{yun:}$job.id{/yun}');"><img src="{yun:}$wap_style{/yun}/images/ysc_n.png" alt="" style="width: 100%;"></li>
+                {yun:}else{/yun}
+                <li onclick="toJobfav()"><img src="{yun:}$wap_style{/yun}/images/icon_collect.png" alt="" style="width: 100%;"></li>
+                {yun:}/if{/yun}
+                <li onclick="toReportCom()"><img src="{yun:}$wap_style{/yun}/images/icon_complaint.png" alt="" style="width: 100%;"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- 页面主体部分 -->
+<div class="min_body">
+
+    <!-- 职位详情 -->
+    <div class="job_describe">
+        <!-- 职位要求及待遇岗位 -->
+        <div class="job_describe_top">
+            <div class="new_jobshowtop">
+                <div class="new_jobshowname">
+                    {yun:}$job.jobname{/yun}
+                    {yun:}if $job.job_rec==1{/yun}<img src="{yun:}$wap_style{/yun}/images/icon_recommend.png" alt="">{yun:}/if{/yun}
+                    {yun:}if $job.job_urgent==1{/yun}<img src="{yun:}$wap_style{/yun}/images/jp.png" alt="">{yun:}/if{/yun}
+                </div>
+                <span class="new_jobshowxz">{yun:}$job.job_salary{/yun}</span>
+            </div>
+
+            <div class="job_describe_top_require">
+                <div class="job_describe_top_require_left">
+                    <i><img src="{yun:}$wap_style{/yun}/images/icon_orientation.png" alt="" style="width: 100%;"></i>
+                    <i>{yun:}$job.job_city_one{/yun}-{yun:}$job.job_city_two{/yun}</i>
+                </div>
+                {yun:}if $job.job_edu{/yun}
+                <div class="job_describe_top_require_center">
+                    <div class="job_describe_top_require_left">
+                        <i><img src="{yun:}$wap_style{/yun}/images/icon_fixed.png" alt="" style="width: 100%;"></i>
+                        <i>{yun:}$job.job_edu{/yun}</i>
+                    </div>
+                </div>
+                {yun:}/if{/yun}
+                {yun:}if $job.job_exp{/yun}
+                <div class="job_describe_top_require_right">
+                    <div class="job_describe_top_require_left">
+                        <i><img src="{yun:}$wap_style{/yun}/images/icon_education.png" alt="" style="width: 100%;"></i>
+                        <i>{yun:}$job.job_exp{/yun}</i>
+                    </div>
+                </div>
+                {yun:}/if{/yun}
+            </div>
+
+            <div class="newjob_show_sj">
+                <span class="">更新 {yun:}$job.lastupdate{/yun}</span>
+                {yun:}if $job.jobhits>0{/yun}<span class="">浏览 {yun:}$job.jobhits{/yun}</span>{yun:}/if{/yun}
+                {yun:}if $job.snum > $config.sy_sq_job_num{/yun}<span class="">投递 {yun:}$job.snum{/yun}份</span>{yun:}/if{/yun}
+            </div>
+        </div>
+
+ <!-- 职位福利 -->
+        {yun:}if !empty($job.welfare){/yun}
+        <div class="job_describe_bottom">
+            <div class="job_describe_cengter_header">职位福利</div>
+            <div class="job_describe_bottom_welfare">
+                <ul>
+                    {yun:}foreach from=$job.arraywelfare item=wlist{/yun}
+                    <li>{yun:}$wlist{/yun}</li>
+                    {yun:}/foreach{/yun}
+                </ul>
+            </div>
+        </div>
+        {yun:}/if{/yun}
+        <!-- 职位详情 -->
+        <div class="job_describe_cengter">
+            <div class="job_describe_cengter_header">职位详情</div>
+            <ul class="job_describe_yq">
+                {yun:}if $job.job_number{/yun}<li>招 {yun:}$job.job_number{/yun}</li>{yun:}/if{/yun}
+                {yun:}if $job.job_report{/yun}<li>{yun:}$job.job_report{/yun}到岗</li>{yun:}/if{/yun}
+                {yun:}if $job.job_age{/yun}<li>{yun:}$job.job_age{/yun}</li>{yun:}/if{/yun}
+                {yun:}if $job.job_sex{/yun}<li>{yun:}$job.job_sex{/yun}</li>{yun:}/if{/yun}
+                {yun:}if $job.job_marriage{/yun}<li>{yun:}$job.job_marriage{/yun}</li>{yun:}/if{/yun}
+                {yun:}if $job.is_graduate{/yun}<li>接受应届生</li>{yun:}/if{/yun}
+                {yun:}if $job.job_lang{/yun}
+                {yun:}foreach from=$job.job_lang item=wlists{/yun}
+                <li>{yun:}$wlists{/yun}</li>
+                {yun:}/foreach{/yun}
+                {yun:}/if{/yun}
+                {yun:}if $department{/yun}<li>{yun:}$department{/yun}</li>{yun:}/if{/yun}
+            </ul>
+            <div class="newjob_js"> {yun:}$job.description{/yun}</div>
+			<!--广告-->
+			{yun:}adlist classid=512 item="lunbo" key=key random=1{/yun}
+			<div class="jobshow_ad">{yun:}$lunbo.html{/yun}</div>
+			{yun:}/adlist{/yun}
+			<!--广告-->
+        </div>
+
+       
+    </div>
+
+    <!-- 公司信息 -->
+    <div class="corporate_information">
+        <div class="corporate_information_header">公司信息</div>
+        <a href="{yun:}url m=wap c=company a=show id=$job.uid{/yun}" title="{yun:}$job.name{/yun}">
+            <div class="corporate_information_message">
+                <div class="corporate_information_message_logo">
+                    <img src="{yun:}$job.logo{/yun}" alt="" width="100%">
+                </div>
+                <div class="corporate_information_message_name">
+                    <div>{yun:}$job.name{/yun}</div>
+                    <div class="com_j_info">
+                        <span>{yun:}$job.job_mun{/yun}</span>
+                        <span>· {yun:}$job.job_pr{/yun} ·</span>
+                        <span>{yun:}$job.job_hy{/yun}</span>
+                    </div>
+                </div>
+                <div class="corporate_information_message_details">
+                    <img src="{yun:}$wap_style{/yun}/images/icon_more.png" alt="" width="100%">
+                </div>
+            </div>
+        </a>
+        {yun:}if $link.data.address{/yun}
+            {yun:}if $job.x && $job.y{/yun}
+				<!-- 预留地图部分 -->
+                <div class="corporate_information_map">
+                    <div class="corporate_information_map_c">
+                        <a class="corporate_information_map_sz" href="{yun:}url m=wap c=job a=jobmap id=$job.uid{/yun}">{yun:}$link.data.address{/yun}</a>
+                    </div>
+                    <img src="{yun:}$job.staticimg{/yun}" alt="" width="100%">
+                </div>
+            {yun:}else{/yun}
+				<!-- 地址 -->
+                <div class=" corporate_information_map_p">{yun:}$link.data.address{/yun}</div>
+            {yun:}/if{/yun}
+        {yun:}/if{/yun}
+		
+		
+        <div class="wxtipbox">
+			
+            <div class="wxtip">
+			<div class="wxtip_tit">{yun:}$config.sy_webname{/yun}温馨提示 </div>
+			 
+			                                                  </div>
+            <div class=""> {yun:}$config.sy_shenming{/yun}
+                <span onclick="toReportCom()" class="wxtip_bth">立即举报</span>
+            </div>
+        </div>
+    </div>
+    {yun:}if $config.com_message == 1{/yun}
+    <!-- 公司问答 -->
+    <div class="company_questions">
+        <div class="company_questions_header">
+            <div class="company_questions_header_left">公司问答</div>
+            <div onclick="zixun()" class="company_questions_header_right">
+                <div class="company_questions_header_right_icon"><img src="{yun:}$wap_style{/yun}/images/icon_question.png" alt="" width="100%"></div>
+                <i class="company_questions_header_right_word">我要提问</i>
+            </div>
+        </div>
+        {yun:}if $msgList{/yun}
+            {yun:}foreach from=$msgList item=msglist{/yun}
+            <div class="company_questions_body">
+                <div class="company_questions_body_top">
+                    <div class="company_questions_body_top_icon"><img src="{yun:}$wap_style{/yun}/images/icon_issue.png" alt="" width="100%"></div>
+                    <i class="company_questions_body_top_ask">{yun:}$msglist.content{/yun}</i>
+                </div>
+                <div class="company_questions_body_top">
+                    <div class="company_questions_body_top_icon"><img src="{yun:}$wap_style{/yun}/images/icon_answer .png" alt="" width="100%"></div>
+                    <i class="company_questions_body_top_answer">{yun:}if $msglist.reply{/yun}{yun:}$msglist.reply{/yun}{yun:}else{/yun}企业尚未回复{yun:}/if{/yun}</i>
+                </div>
+            </div>
+            {yun:}/foreach{/yun}
+            <!--
+            <div class="company_questions_box">
+                <div class="company_questions_box_btn"> 查看全部回答 </div>
+            </div>
+            -->
+        {yun:}else{/yun}
+            <div class="jobshow_tw_box">
+                <i class="jobshow_tw_boximg"></i> 对此职位有疑问？快来问问吧 !
+                <div class="jobshow_tw_bth">
+                    {yun:}if $uid{/yun}
+                        {yun:}if $usertype == 1{/yun}
+                            <a href="javascript:void(0)" onclick="zixun('{yun:}$uid{/yun}','{yun:}$usertype{/yun}');" class="">我要提问</a>
+                        {yun:}else{/yun}
+                            <a href="javascript:void(0)" onclick="showToast('只有个人用户才能提问');" class="">我要提问</a>
+                        {yun:}/if{/yun}
+                    {yun:}else{/yun}
+                        <a href="javascript:void(0)" onclick="pleaselogin('您还未登录个人账号，是否登录？','{yun:}url m=wap c=login{/yun}')" class="">我要提问</a>
+                    {yun:}/if{/yun}
+                </div>
+            </div>
+        {yun:}/if{/yun}
+    </div>
+    {yun:}/if{/yun}
+
+    <!-- 推荐岗位 -->
+    {yun:}if !$usertype || $usertype == '1'{/yun}
+    <div class="recommend_post">
+        <div class="recommend_post_header">推荐岗位</div>
+        <div class="recommend_post_card_box">
+            <!-- 卡片视图主体部分 -->
+            {yun:}joblist limit=4 noid='@job.id' nouid='@job.uid' jobids='@job.job1' namelen=15 item=job_jia key=key{/yun}
+            <div class="recommend_post_card">
+                <a href="{yun:}url m=wap c=job a=comapply id=$job_jia.id{/yun}" title="{yun:}$job_jia.name{/yun}">
+                    <div class="recommend_post_card_top">
+                        <div class="recommend_post_card_name">{yun:}$job_jia.name_n{/yun}</div>
+                        <div class="recommend_post_card_money">{yun:}$job_jia.job_salary{/yun}</div>
+                    </div>
+                    <div class="newjob_info"><span>{yun:}$job_jia.job_city_one{/yun}-{yun:}$job_jia.job_city_two{/yun}</span>
+					 {yun:}if $job_jia.job_edu{/yun}
+					 <i class="newjob_info_line"></i><span>{yun:}$job_jia.job_edu{/yun}学历</span>
+					 {yun:}/if{/yun}
+					 {yun:}if $job_jia.job_exp{/yun}
+					<i class="newjob_info_line"></i> <span>{yun:}$job_jia.job_exp{/yun}经验</span>
+					 {yun:}/if{/yun}
+					 
+					</div>
+					{yun:}if $job_jia.welfarename{/yun}
+					<div class="welfare">
+						{yun:}foreach from=$job_jia.welfarename item=waflist{/yun}
+						<span class="welfare_n">{yun:}$waflist{/yun}</span>
+						{yun:}/foreach{/yun}
+					</div>
+					{yun:}/if{/yun}
+                    <div class="recommend_post_card_bottom">
+                        <div class="recommend_post_card_bottom_left">
+                            <div class="recommend_post_card_bottom_left_logo"><img src="{yun:}$job_jia.logo{/yun}" alt="" width="100%"></div>
+                            <i class="recommend_post_card_bottom_left_word">{yun:}$job_jia.com_name{/yun}</i>
+                        </div>
+                        <div class="recommend_post_card_bottom_right">
+                            {yun:}if $job_jia.time=='今天' || $job_jia.time=='昨天'||$job_jia.redtime=='1'{/yun}
+                                {yun:}$job_jia.time{/yun}
+                            {yun:}else{/yun}
+                                {yun:}$job_jia.time{/yun}
+                            {yun:}/if{/yun}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {yun:}joblistelse{/yun}
+            <div class="company_questions">
+                <div class="wap_member_no">很抱歉,暂无推荐职位！</div>
+            </div>
+            {yun:}/joblist{/yun}
+        </div>
+    </div>
+    {yun:}/if{/yun}
+</div>
+
+<div id="app" style="display: none;">
+	<!-- 固定的手机尾部 new---------------------->
+	{yun:}if $job.status=='0'{/yun}
+	<div class="yun_czfoot">
+		<div class="yun_czfootfixed">
+			<div class="yun_czfoot_c">
+				<div class="yun_czfoot_l">
+					<div class="yun_czfoot_s"><div class="yun_czfoot_s_p yun_czfoot_scicon" @click="footShare">分享</div></div>
+					<div class="yun_czfoot_s"><div class="yun_czfoot_s_p yun_czfoot_dhicon" @click="openLinkTip">电话</div> </div> 
+				</div>
+				
+				<div class="yun_czfoot_r">
+					
+					{yun:}if $usertype!=1 && $uid!=''{/yun}
+				        <div onclick="showToast('只有个人用户才能投递');" class="yun_czfoot_lt yun_czfoot_lt_td">投递简历</div>
+					{yun:}elseif $job.userid_job{/yun}
+						<div class="yun_czfoot_lt yun_czfoot_lt_ytd">已投递</div>
+					{yun:}elseif $job.invite_job{/yun}
+						<div class="yun_czfoot_lt yun_czfoot_lt_ytd">已邀请面试</div>
+					{yun:}elseif $uid==''{/yun}
+						<a href="{yun:}url m=wap c=job a=applyjobuid jobid=$job.id{/yun}" class="yun_czfoot_lt yun_czfoot_lt_td">投递简历</a>
+					{yun:}else{/yun}
+						<div @click="jobapplyshow" class="yun_czfoot_lt yun_czfoot_lt_td">投递简历</div>
+					{yun:}/if{/yun}
+				</div>
+			</div>
+		</div>	
+	</div>
+	{yun:}/if{/yun}
+	<!-- 固定的手机尾部  new---------------------->
+
+    <!--以下是查看联系方式弹出框----------------------------------------------------------------------------------->
+    <van-dialog v-model="linkShow" :show-confirm-button="false" width="300" close-on-click-overlay>
+        <template v-if="linkCode == 1">
+            <div class="new_jobshow_telbox">
+                <div class="new_jobshow_leftname"><span class="">联系方式</span></div>
+                <div class="">
+                    {yun:}if $link.linkData.linkman{/yun}
+                    <div class=""><span class="">{yun:}$link.linkData.linkman{/yun}</span> {yun:}if $job.linkjob{/yun}（{yun:}$job.linkjob{/yun}）{yun:}/if{/yun}</div>
+                    {yun:}/if{/yun}
+                    {yun:}if $link.linkData.linktel{/yun}
+                    <div class="new_jobshow_tellist new_jobshow_tellistpd"><a href="tel:{yun:}$link.data.linktel{/yun}" onclick="addtellog();" class="">手机 {yun:}$link.linkData.linktel{/yun}<span class="bd">拨打</span></a></div>
+                    {yun:}/if{/yun}
+                    {yun:}if $link.linkData.linkphone{/yun}
+                    <div class="new_jobshow_tellist"><a href="tel:{yun:}$link.data.linkphone{/yun}" onclick="addtellog();" class="new_jobshow_tellist_n">固话 {yun:}$link.linkData.linkphone{/yun}<span class="bd">拨打</span></a></div>
+                    {yun:}/if{/yun}
+                    <div class="new_jobshow_teltip">联系我时，请说是在{yun:}$config.sy_webname{/yun}上看到的</div>
+                </div>
+            </div>
+        </template>
+        <template v-else-if="linkCode > 1 && linkCode < 6">
+            <!--未开放联系方式，提示投递简历-->
+            <div class="new_jobshow_name">温馨提示</div>
+            <div class="new_jobshow_telnewbox">
+                <div class="new_jobshow_tel">{yun:}$link.linkMsg{/yun}{yun:}if !$job.userid_job{/yun}，请直接投递简历{yun:}/if{/yun}</div>
+
+                {yun:}if !$job.userid_job{/yun}
+                <div class="new_jobshow_telbth" @click="jobapplyshow"><span class="new_jobshow_telbth_a">投递简历</span></div>
+                {yun:}/if{/yun}
+            </div>
+        </template>
+        <template v-else-if="linkCode == 6">
+            <div class="new_jobshow_name">温馨提示</div>
+            <div class="new_jobshow_tel">{yun:}$link.linkMsg{/yun}，查看联系方式</div>
+            <div class="new_jobshow_telbth"><a href="{yun:}url m=wap c=login{/yun}" class="new_jobshow_telbth_a" v-if="!uid">立即登录</a></div>
+        </template>
+        <template v-else-if="linkCode == 7">
+            <div class="new_jobshow_name">温馨提示</div>
+            <div class="new_jobshow_tel">{yun:}$link.linkMsg{/yun}</div>
+            <div class="new_jobshow_telbth"><a href="member/index.php?c=addresume" class="new_jobshow_telbth_a">创建简历</a></div>
+        </template>
+        <template v-else-if="linkCode == 8">
+            <!--设置投递简历查看联系方式-->
+            <div class="new_jobshow_name">温馨提示</div>
+            <div class="new_jobshow_tel">{yun:}$link.linkMsg{/yun}</div>
+            <div class="new_jobshow_telbth"><a href="javascript:void(0);" @click="jobapplyshow" class="new_jobshow_telbth_a">投递简历</a></div>
+        </template>
+    </van-dialog>
+	
+    <!-- 投递简历弹出框 -->
+    <van-dialog v-model="myResumesShow" title="投递简历" :show-confirm-button="false" close-on-click-overlay>
+        <div class="">
+            <div class="">
+                <div class="job_prompt_sendresume_job"> 您正在申请 <span class="job_prompt_sendresume_jobname">{yun:}$job.jobname|mb_substr:0:14:'utf-8'{/yun}</span>职位，请选择您要投递的简历
+
+                    <div class="job_prompt_sendresume_list" v-for="(item,rkey) in resumelist" :key="rkey">
+                        <div :class="resume_choosed_id==item.id?'job_prompt_sendresume_list_cur':''" @click='sqjobclic(item.id);'><i class='job_prompt_sendresume_radio'></i> <i class='job_prompt_sendresume_radio_q'></i>{{item.name}}{{item.defaults==1?'(默认简历)':''}}
+                        </div>
+                    </div>
+                    <div class="job_prompt_box_ok" @click="jobapply();"><span class="job_prompt_box_ok_bth">立即投递</span></div>
+                </div>
+            </div>
+        </div>
+    </van-dialog>
+
+    <input id="companyname" type="hidden" value="{yun:}$job.com_name{/yun}"/>
+    <input id="jobname" type="hidden" value="{yun:}$job.jobname{/yun}"/>
+    <input id="companyuid" type="hidden" value="{yun:}$job.uid{/yun}"/>
+    <input id="jobid" type="hidden" value="{yun:}$job.id{/yun}"/>
+
+    <!-- 投递简历弹出框 -->
+    <van-dialog v-model="telQrcodeBoxShow" title="联系方式" :show-confirm-button="false" close-on-click-overlay>
+        <div class="tel_wxqrcodebox">
+            <div id="tel_wxqrcode" class="tel_wxqrcodebox_ewm" v-html="telQrcode"></div>
+            <div class="tel_wxqrcodebox_p">长按识别二维码查看联系方式</div>
+        </div>
+    </van-dialog>
+
+    <!-- 举报弹出 -->
+    <van-popup v-model="reportShow" position="bottom" round closeable>
+        <div class="job_tckpd">
+            <div class="job_tcktit">举报此职位</div>
+            <div class="job_tcktip">请选择您的举报理由！</div>
+            <div class="">
+                <span v-for="(reason,index) in report_reasons" :key="index">
+                    <span class="job_tckxz" :class="report_result.indexOf(reason) > -1 ? 'job_tckxz_cur' : ''" @click="chooseReason(reason)">{{reason}}</span>
+                </span>
+            </div>
+            <div class="job_tcktextarea">
+                <textarea placeholder="请简明扼要的阐述你的理由，以便工作人员更好的判断" id="r_reason" class=""></textarea>
+            </div>
+
+            <div class="job_tckyzmbox">
+                <div class="job_tckyzm">
+                    <input type="text" class="" id="authcode" maxlength="6" placeholder="输入图片验证码" autocomplete="off">
+                </div>
+                <a onclick="checkCode('vcode_img');"> <img id="vcode_img" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" class="job_tckyzmimg"/> </a>
+            </div>
+            <div class="job_tckbth">
+                <input class="" type="button" value="举 报" @click="reportSub"/>
+            </div>
+        </div>
+    </van-popup>
+
+    <!--分享面板-->
+    <van-share-sheet v-model="shareShow" title="分享到" :options="shareoptions" @select="shareSelect"></van-share-sheet>
+
+    <!--海报-->
+    <van-popup v-model="jobHbShow" round :style="{height:'100%',width:'100%',background:'none'}">
+        <!-- <div class="hb_tc">
+            <img :src="jobHb" style="max-width: 100%;">
+            <div class="hb_tc_bth">
+                <div @click="getJobHb()" class="hb_tc_hyz">换一张</div>
+                <div class="hb_tc_bchb"> <span class="hb_tc_bchb_c" @click="jobHbTipShow=!jobHbTipShow" v-if="jobHbTipShow"> <i class="hb_tc_bchbicon"></i>长按图片保存 </span></div>
+            </div>
+        </div> -->
+        <div class="boisuyeAll">
+            <img :src="hbSrc" style="max-width: 100%;">
+        </div>
+        <div class="posterWapAll">
+            <div class="goBackDo" @click="jobHbShow = false">
+                <van-icon name="arrow-left"/>
+            </div>
+            <template v-if="hbShow">
+                <van-swipe :loop="false" :width="150">
+                    <template v-for="(item, hbKey) in hbList" :key="hbKey">
+                        <van-swipe-item @click="getNewJobHb(item.id)">
+                            <div class="swipeItems">
+                                <div class="swipeItemImg" :class="hb == item.id ? 'swipeItemImgColor' : ''">
+                                    <img :src="item.pic_n" style="max-width: 100%;">
+                                </div>
+                                <div class="swipeItemText" v-if="hb == item.id">
+                                    <img src="{yun:}$wap_style{/yun}/images/come-through.png" alt="">
+                                </div>
+                            </div>
+                        </van-swipe-item>
+                    </template>
+                </van-swipe>
+            </template>
+            <div class="directionOptyte">
+                <p>点击海报查看大图，长按保存后进行分享</p>
+                <div class="directionAll" @click="hbShow = !hbShow">
+                    <div class="directiTou" v-if="hbShow">
+                        <van-icon name="arrow-up"/>
+                    </div>
+                    <div class="directiTou" v-else>
+                        <van-icon name="arrow-down"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </van-popup>
+
+    <!--复制文本弹出-->
+    <van-dialog v-model="copyBoxShow" :show-confirm-button="false" close-on-click-overlay>
+        <div class="job_tckpd">
+            <div class="job_tcktit">复制文本</div>
+            <div class="">
+                <div class="job_tckwb" id="copyBoxText" v-html="wxpubtemp_html" style="white-space: pre-wrap;"></div>
+                <div class="job_tckbth"><a href="javascript:;" class="fzwb" data-clipboard-action="copy" data-clipboard-target="#copyBoxText">复制文本</a></div>
+            </div>
+        </div>
+    </van-dialog>
+
+    <div class="copyUrl none" data-clipboard-text="{yun:}url m=wap c=job a=share id=$job.id{/yun}" data-clipboard-action="copy"></div>
+
+    {yun:}if $config.sy_h5_share==1{/yun}
+        <div class="none" data-url='{yun:}url m=wap c=job a=share id=$job.id{/yun}' id="shareClick"></div>
+    {yun:}else{/yun}
+        <div class="none" id="shareClick"></div>
+    {yun:}/if{/yun}
+
+    {yun:}if $config.com_message == 1{/yun}
+    <!--问企业弹出-->
+    <van-popup v-model="zixunShow" position="bottom" round closeable>
+        <div class="job_tckpd">
+            <div class="job_tcktit">问企业</div>
+            <div class="job_tcktip">您的问题会在企业回答后展示在职位详情页！</div>
+            <div class="job_tcktextarea">
+                <textarea class=" mt10" id="reasons" placeholder="请输入你要咨询的问题">{{question}}</textarea>
+                <input type="hidden" name="jobid" value="{yun:}$job.id{/yun}"/>
+            </div>
+            <div class="job_tckyzmbox">
+                <div class="job_tckyzm">
+                    <input type="text" class="" placeholder="请输入验证码" id="authcodes" maxlength="6">
+                </div>
+                <a onclick="checkCode('vcode_imgs');"> <img id="vcode_imgs" src="{yun:}$config.sy_wapdomain{/yun}/authcode.inc.php" class="job_tckyzmimg"/> </a>
+            </div>
+            <div class="ask_between">
+                <div class="ask_between_l" v-if="hot_issues.length > 0">热门问题</div>
+                <div class="ask_between_l" v-else></div>
+                <div class="ask_between_r">默认为匿名提问</div>
+            </div>
+            <div class="ask_question" v-for="(item, asq_key) in hot_issues" :key="asq_key" :id="'asq_' + asq_key"
+                  @click="checkQuestion(asq_key)">{{asq_key+1}}.{{item}}</div>
+            <div class="job_tckbth">
+                <input class="" type="button" value="提交咨询" onclick="zixunSubs();"/>
+            </div>
+        </div>
+    </van-popup>
+
+    {yun:}/if{/yun}
+
+	<!-- 电话弹窗开始 -->
+	<van-popup v-model="prvBox" position="center" :style="{ width:'90%',background:'none'}" closeable @closed="prvBoxClose">
+		<div class="popupSubject">
+			<div class="popupTop">
+				<p>为保护用户隐私，本号码为虚拟号码</p>
+				<h3>{{prvlinktel}}</h3>
+				<span v-if="prvtime">有效期 {{prvtime}} 秒</span>
+				<span v-else>号码已过期</span>
+			</div>
+			<div class="popupButton">
+				<a v-if="prvtime" :href="'tel:' + prvlinktel" onclick="addtellog();">立即拨打</a>
+				<a v-else href="javascript:;" @click="getLink">重新获取</a>
+				<p>请使用手机号 <span>{{prvusertel}}</span> 拨打电话</p>
+			</div>
+		</div>
+	</van-popup>
+	<input type="hidden" id="linkerror" value="{yun:}$link.errorcode{/yun}" />
+	<input type="hidden" id="comprivacy" value="{yun:}$config.sy_comprivacy_open{/yun}" />
+	<!-- 电话弹窗结束 -->
+</div>
+{yun:}include file="$wapstyle/publichtm/public_js.htm"{/yun}
+
+<script src="{yun:}$config.sy_weburl{/yun}/js/clipboard/clipboard.min.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script>
+<script type="text/javascript">
+    var wapurl = "{yun:}url m=wap{/yun}";
+
+    var com_link_look = "{yun:}$config.com_link_look{/yun}";
+    var isweixin = "{yun:}$isweixin{/yun}";
+    var usertype = "{yun:}$usertype{/yun}";
+    var uid = "{yun:}$uid{/yun}";
+    var com_login_link = "{yun:}$config.com_login_link{/yun}";
+    var linkCode = '{yun:}$link.linkCode{/yun}';
+    var hbNum = '{yun:}$hbNum{/yun}';
+
+    /*var hbids = [];
+    '{yun:}foreach from=$hbids item=v{/yun}'
+    hbids.push('{yun:}$v{/yun}')
+    '{yun:}/foreach{/yun}'*/
+
+    var shareoptions = [
+        {
+            name: '微信',
+              icon: '{yun:}$wap_style{/yun}/images/fx_wx.png',
+            className: 'wechat'
+        },
+        {
+            name: '复制文本',
+            icon: '{yun:}$wap_style{/yun}/images/fx_wb.png',
+            className: 'copytxt'
+        },
+        {
+            name: '复制链接',
+             icon: '{yun:}$wap_style{/yun}/images/fx_lj.png',
+            className: 'link'
+        }
+    ];
+
+    '{yun:}if $hbNum > 0{/yun}'
+    shareoptions.splice(1, 0, {
+        name: '分享海报',
+         icon: '{yun:}$wap_style{/yun}/images/fx_hb.png',
+        className: 'poster'
+    });
+    '{yun:}/if{/yun}'
+
+    var config = {
+        url: '{yun:}url m=wap c=job a=share id=$job.id{/yun}',
+        title: '{yun:}$title{/yun}',
+        desc: '{yun:}$description{/yun}',
+        img: '{yun:}$config.sy_ossurl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+        img_title: '{yun:}$job.name{/yun}',
+        from: '{yun:}$config.sy_webname{/yun}'
+    };
+
+    var joblistvue = new Vue({
+        el: '#app',
+        data: {
+            jobid: '{yun:}$job.id{/yun}',
+            uid: '{yun:}$uid{/yun}',
+            usertype: '{yun:}$usertype{/yun}',
+            zixunShow: false,
+            fav_job: '{yun:}$job.fav_job{/yun}', //是否已收藏该职位
+            //投递简历相关参数
+            myResumesShow: false,
+            resumelist: [],
+            resume_choosed_id: '',
+            //联系方式
+            linkCode: linkCode ? parseInt(linkCode) : '',
+            linkShow: false,
+            telQrcodeBoxShow: false,
+            telQrcode: '正在获取二维码...',
+            //举报
+            reportShow: false,
+            report_reasons: [],
+            report_result: [],
+            //分享
+            shareShow: false,
+            shareoptions: shareoptions,
+
+            //海报
+            jobHbShow: false,
+            hbList: [],
+            hb: 0,
+            hbSrc: '',
+            // jobHbTipShow: true,
+
+            hbShow: true,
+
+            //复制文本
+            copyBoxShow: false,
+            // 热门问题
+            hot_issues: [],
+            question: '',
+			prvBox: false,
+			prvlinktel: '',
+			prvtime: 0,
+			prvusertel: '',
+			wxpubtemp_html: ''
+        },
+        created(){
+            $('#app').css('display', 'block');
+        },
+        methods: {
+            openLinkTip: function () {
+                var that = this;
+                if(that.linkCode > 9){
+
+                    this.getLink();
+                }else if (that.linkCode < 9){
+
+                    that.linkShow = true;
+                }else  if (isweixin) {
+
+                    this.telQrcode = '<img src="index.php?c=job&a=telQrcode&id=' + that.jobid +
+                        '" width="120" height="120">';
+                    this.telQrcodeBoxShow = true;
+                }else{
+
+                    showToast('请打开微信查看那联系方式！');
+                }
+            },
+            toJobfav: function () {
+                var that = this;
+                if (that.usertype != '1' && that.uid != '') {
+                    showToast('只有个人用户才能收藏');
+                } else if (that.uid == '') {
+                    pleaselogin('您还未登录个人账号，是否登录？', '{yun:}url m=wap c=login{/yun}')
+                    return false;
+                } else {
+                    jobfav('{yun:}$job.id{/yun}');
+                }
+            },
+            jobapplyshow: function () {
+                var that = this;
+                that.closetip();
+                $.post(wapurl + "?c=ajax&a=index_ajaxjob", {rand: Math.random()}, function (data) {
+                    if (data.st == 9) {
+                        var resumelist = data.data;
+						if(resumelist.length > 1){
+							var myResumesHtml = '';
+							                
+							for (let i in resumelist) {
+							    if (resumelist[i].defaults == 1) {
+							        that.resume_choosed_id = resumelist[i].id;
+							    }
+							                
+							}
+							that.resumelist = resumelist;
+							that.myResumesShow = true;
+						}else{
+							that.jobapply();
+						}
+                    } else if(data.st == 10){
+						showConfirm(data.msg, function () {
+						    location.href = wapurl + 'member/index.php?c=resume';
+						}, '取消', '前往调整');
+					} else if(data.st == 11){
+						showConfirm(data.msg, function () {
+						    location.href = wapurl + 'member/index.php?c=addresume';
+						}, '取消', '前往创建');
+					} else {
+                        showModal(data.msg);
+                        return false;
+                    }
+                },'json');
+            },
+            sqjobclic: function (id) {
+                var that = this;
+                that.resume_choosed_id = id;
+            },
+            jobapply: function () {
+                var that = this;
+
+                that.myResumesShow = false;
+
+                eid = that.resume_choosed_id;
+
+                var jobid = $("#jobid").val();
+
+                showLoading()
+
+                $.get(wapurl + "/index.php?c=job&a=comapply&type=sq&id={yun:}$job.id{/yun}&eid=" + eid,
+                    function (data) {
+                        hideLoading();
+                        var data = eval('(' + data + ')');
+                        if (data.state == 1) {
+                            pleaselogin('您还未登录个人账号，是否登录？', '{yun:}url m=wap c=login{/yun}')
+                        } else if (data.state == 2) {
+                            showToast('只有个人用户才能投递');
+                            return false;
+                        } else if (data.state == 7) {
+
+                            showConfirm(data.msg, function () {
+                                location.href = data.url;
+                            }, '取消', '完善简历');
+
+                        } else if (data.url) {
+                            if (data.url == '1') {
+                                url = location.href;
+                            }
+                            showToast(data.msg, 2, function () {
+                                location.href = data.url;
+                            });
+                        } else {
+                            showToast(data.msg, 2, function () {
+                                window.location.reload();
+                            });
+                        }
+                    });
+            },
+            chooseReason: function (reason) {
+                if (this.report_result.indexOf(reason) == -1) {
+                    this.report_result.push(reason);
+                } else {
+					var list = deepClone(this.report_result);
+					for(var i = 0; i < list.length; i++) {
+						if(reason == list[i]) {
+							list.splice(i, 1);
+						}
+					}
+					this.report_result = list;
+                }
+            },
+            reportSub: function () {
+                var authcode = $("#authcode").val();
+                var reason = "理由：";
+
+                if (this.report_result.length > 0) {
+                    reason += this.report_result.join('，') + '；';
+                } else {
+                    showToast('请选择举报理由！');
+                    return false;
+                }
+
+                var r6 = $("#r_reason").val();
+                var reason = reason + r6;
+                if (authcode == '') {
+                    showToast('请填写验证码！');
+                    return false;
+                }
+
+                showLoading()
+                $.post(wapurl + "?c=job&a=report", {
+                    id: '{yun:}$job.id{/yun}',
+                    authcode: authcode,
+                    reason: reason
+                }, function (data) {
+                    hideLoading();
+                    var data = eval('(' + data + ')');
+                    if (data.url) {
+                        showToast(data.msg, 2, function () {
+                            location.href = data.url;
+                        });
+                    } else {
+                        showToast(data.msg, 2, function () {
+                            location.reload(true);
+                        });
+                    }
+                });
+            },
+            shareSelect: function (e) {
+                var that = this;
+                var classname = e.className;
+                this.closetip();
+                if (classname == 'wechat') {
+                    $('#shareClick').click();
+                } else if (classname == 'poster') {
+                    that.getJobHb();
+                } else if (classname == 'copytxt') {
+                    this.wbRequest();
+                } else if (classname == 'link') {
+                    $('.copyUrl').click();
+                }
+            },
+            getJobHb: function(){
+                var that = this;
+                showLoading();
+                $.post(wapurl + "?c=job&a=getHbList", {rand: Math.random()}, function (data) {
+                    var data = eval('(' + data + ')');
+                    hideLoading();
+
+                    if (data.errcode == 1){
+
+                        that.hbList = data.hbList;
+                        that.hb = data.hbList[0].id;
+
+                        var src = wapurl + '?c=ajax&a=getJobHb&id=' + that.jobid + '&hb=' + that.hb;
+                        var hbImg = new Image();
+                        hbImg.src = src;
+
+                        hbImg.onload = function(){
+                            that.hbSrc = hbImg.src;
+                            that.jobHbShow = true;
+                        }
+                    }else{
+                        showToast(data.errmsg);
+                        return false;
+                    }
+                });
+            },
+            getNewJobHb: function(hb){
+
+                var that = this;
+                if (hb != that.hb){
+                    showLoading('生成中...');
+                    that.hb = hb;
+                    var src = wapurl + '?c=ajax&a=getJobHb&id=' + that.jobid + '&hb=' + hb;
+                    var hbImg = new Image();
+                    hbImg.src = src;
+
+                    hbImg.onload = function(){
+                        that.hbSrc = hbImg.src;
+                        hideLoading();
+                    }
+                }
+            },
+            /*getJobHb: function () {
+
+                let next;
+                var that = this;
+                var hb = that.jobHbNext;
+                this.closetip();
+                showLoading('生成中...');
+                var id = that.jobid;
+                var src = wapurl + '?c=ajax&a=getJobHb&id=' + id + '&hb=' + hbids[hb];
+
+                if (hb < (parseInt(hbNum) - 1)) {
+
+                    next = hb + 1;
+                } else {
+
+                    next = 0;
+                }
+                var hbImg = new Image();
+                hbImg.src = src;
+
+                hbImg.onload = function(){
+                    hideLoading();
+                    that.jobHbNext = next;
+                    that.jobHb = hbImg.src;
+                    that.jobHbShow = true;
+                }
+            },*/
+            closetip: function () {
+                var that = this;
+                that.myResumesShow = false;
+                that.zixunShow = false;
+                that.linkShow = false;
+                that.telQrcodeBoxShow = false;
+                that.reportShow = false;
+                that.shareShow = false;
+                that.jobHbShow = false;
+                that.copyBoxShow = false;
+            },
+            checkQuestion: function(key) {
+                this.question = this.hot_issues[key];
+            },
+            getLink: function () {
+                var that = this;
+                showLoading();
+                $.post(wapurl + "?c=job&a=getLink", {jobid: '{yun:}$job.id{/yun}'}, function (data) {
+                    hideLoading();
+                    if(data.linkCode == 10){
+                        that.prvlinktel = data.prvlinktel;
+                        that.prvusertel = data.prvusertel;
+                        that.prvtime = data.prvtime;
+                        that.countdown();
+                        that.prvBox = true;
+                    }else if(data.linkCode == 11){
+                        showToast(data.linkMsg);
+                    }else{
+                        that.linkShow = true;
+                    }
+                },'json');
+            },
+			countdown(){
+				var that = this;
+				if (that.prvtime > 0) {
+					setTimeout(function() {
+						that.prvtime = that.prvtime - 1;
+						that.countdown();
+					}, 1000);
+				}
+			},
+			prvBoxClose(){
+				this.prvlinktel = '';
+				this.prvusertel = '';
+				this.prvtime = 0;
+			},
+			wbRequest: function () {
+			    var that = this;
+				showLoading();
+			    $.post(wapurl + "?c=job&a=getJobWb", {jobid: '{yun:}$job.id{/yun}'}, function (data) {
+			        hideLoading();
+					if(data.wxpubtemp_html){
+						that.wxpubtemp_html = data.wxpubtemp_html;
+						that.copyBoxShow = true;
+					}
+			    },'json');
+			},
+			footShare: function() {
+			    this.shareShow = true;
+			}
+        }
+    });
+    $(function () {
+        var clipboard = new ClipboardJS(".copyUrl");
+        clipboard.on('success', function (e) {
+            showToast('复制成功！');
+            joblistvue.closetip();
+            e.clearSelection();
+        });
+        clipboard.on('error', function (e) {
+        });
+
+        var clipboard2 = new ClipboardJS(".fzwb");
+        clipboard2.on('success', function (e) {
+            showToast('复制成功！');
+            joblistvue.closetip();
+            e.clearSelection();
+        });
+        clipboard2.on('error', function (e) {
+        });
+    })
+    function zixunSubs()
+    {
+        var authcode = $("#authcodes").val();
+        var reason = $("#reasons").val();
+        var jobid = $.trim($("input[name='jobid']").val());
+        if (reason == '') {
+            showToast('请填写咨询内容！');
+            return false;
+        }
+        if (authcode == '') {
+            showToast('请填写验证码！');
+            return false;
+        }
+
+        showLoading()
+        $.post(wapurl + "?c=job&a=msg", {
+            authcode: authcode,
+            content: reason,
+            jobid: jobid
+        }, function (data) {
+            hideLoading();
+            var data = eval('(' + data + ')');
+            if (data.url) {
+                showToast(data.msg, 2, function () {
+                    location.href = data.url;
+                });
+            } else {
+                showToast(data.msg, 2, function () {
+                    location.reload(true);
+                });
+            }
+        });
+    }
+    function addtellog()
+    {
+        $.post(wapurl + "?c=ajax&a=addJobTelLog", {
+            jobid: '{yun:}$job.id{/yun}',
+        }, function (data) {
+
+        });
+    }
+    function toJobfav()
+    {
+        joblistvue.toJobfav();
+    }
+    function cancelFavJob(id)
+    {
+
+        showLoading('请稍候...');
+
+        $.post(wapurl + "?c=job&a=cancelJobFav", {id, id}, function (data) {
+            hideLoading();
+            var data = eval('(' + data + ')');
+            if (data.errcode == 9) {
+
+                showToast(data.msg, 2, function () {
+                    location.reload(true);
+                });
+            } else{
+
+                showToast(data.msg);
+                return false;
+            }
+        })
+    }
+    function jobfav(jobid)
+    {
+        showLoading('收藏中，请稍等...');
+        $.get(wapurl + "?c=job&a=comapply&type=fav&id={yun:}$job.id{/yun}", function (data) {
+            hideLoading();
+            var data = eval('(' + data + ')');
+            if (data.state == 0) {
+                pleaselogin('您还未登录个人账号，是否登录？', '{yun:}url m=wap c=login{/yun}')
+            } else if (data.state == 4) {
+                showToast('只有个人用户才能收藏');
+                return false;
+            } else if (data.url) {
+                if (data.url == '1') {
+                    url = location.href;
+                }
+                showToast(data.msg, 2, function () {
+                    location.href = data.url;
+                });
+            } else {
+                showToast(data.msg, 2, function () {
+                    location.reload(true);
+                });
+            }
+        })
+    }
+    function toReportCom()
+    {
+        var that = this;
+        var url = '{yun:}url m=wap c=job a=getreport{/yun}';
+        $.post(url, {rand: Math.random()}, function (res) {
+            if (res) {
+                joblistvue.$data.report_reasons = res.reason;
+            }
+        }, 'json');
+
+        if (usertype == '1') {
+        	checkCode('vcode_img');
+            joblistvue.$data.reportShow = true;
+        } else if (uid != '') {
+           showToast('只有个人用户才能举报');
+        } else {
+            pleaselogin('您还未登录个人账号，是否登录？', '{yun:}url m=wap c=login{/yun}');
+        }
+    }
+    function pmLook()
+    {
+        if (joblistvue.$data.uid) {
+            if (joblistvue.$data.usertype == '1') {
+                window.location.href = '{yun:}url m=wap c=job a=compete id=$job.id{/yun}';
+            } else {
+                showToast('只有个人用户才能查看');
+            }
+        } else {
+            showConfirm('您还未登录个人账号，是否登录？', function () {
+                window.location.href = '{yun:}url m=wap c=login{/yun}';
+            })
+        }
+    }
+    function zixun()
+    {
+        if (joblistvue.$data.uid) {
+            if (joblistvue.$data.usertype == '1') {
+            	checkCode('vcode_imgs');
+                $.post('{yun:}url d=wxapp m=job c=getHotIssues{/yun}', {rand: Math.random()}, function (res) {
+                    if (res.data.list) {
+                        joblistvue.$data.hot_issues = res.data.list
+                    }
+                }, 'json')
+                joblistvue.$data.zixunShow = true;
+            } else {
+                showToast('只有个人用户才能提问');
+            }
+        } else {
+            showConfirm('您还未登录个人账号，是否登录？', function () {
+                window.location.href = '{yun:}url m=wap c=login{/yun}';
+            })
+        }
+    }
+    $(function () {
+        '{yun:}if $usertype==1{/yun}'
+        var id = '{yun:}$smarty.get.id{/yun}';
+        $.post('index.php?c=job&a=history', {id: id}, function (data) {
+            return true;
+        });
+        '{yun:}/if{/yun}'
+    });
+</script>
+</body>
+</html>

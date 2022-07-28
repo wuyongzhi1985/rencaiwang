@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js?v={yun:}$config.cachecode{/yun}"></script>
+	<link href="{yun:}$config.sy_weburl{/yun}/js/layui/css/layui.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/layui.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="{yun:}$config.sy_weburl{/yun}/js/layui/phpyun_layer.js?v={yun:}$config.cachecode{/yun}"></script>
+	<script src="js/admin_public.js?v={yun:}$config.cachecode{/yun}" language="javascript"></script> 
+	<script src="js/show_pub.js?v={yun:}$config.cachecode{/yun}"></script> 
+	<link href="images/reset.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<link href="images/system.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" /> 
+	<link href="images/table_form.css?v={yun:}$config.cachecode{/yun}" rel="stylesheet" type="text/css" />
+	<title>后台管理</title>
+</head>
+
+<body class="body_ifm"> 
+
+	<span id="temp"></span>
+
+	<div class="infoboxp">
+		
+		<div class="tty-tishi_top">
+			<div class="tabs_info">
+				<ul>
+					<li><a href="index.php?m=admin_once">店铺招聘</a></li>
+					<li><a href="index.php?m=admin_once&c=set">店铺设置</a></li>
+					<li class="curr"><a href="index.php?m=admin_once&c=price_gear">招聘时长</a></li>
+				</ul>
+			</div>
+
+			<div class="admin_new_tip">
+				<div class="admin_new_tit"><i class="admin_new_tit_icon"></i>操作提示</div>
+				<div class="admin_new_tip_list_cont">
+					<div class="admin_new_tip_list">店铺招聘时长设置，可对招聘时长和收费价格编辑、修改等操作。</div>
+				</div>
+			</div>
+			<div class="admin_new_search_box">
+				<a  href="javascript:void(0);" onClick="add_class('添加档位','450','230','#houtai_div','')"  class="admin_new_cz_tj" style="margin-left:0px;">+ 添加档位</a>
+			</div>
+		</div>
+  <div class="clear"></div>
+ 
+<div class="tty_table-bom">
+<div class="table-list">
+  <div class="admin_table_border">
+  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+<form action="index.php?m=admin_once&c=price_gear_del" method="post" target="supportiframe" id='myform'>  
+<input type="hidden" name="pytoken"  id='pytoken' value="{yun:}$pytoken{/yun}">
+<table width="100%" id="table_industry">
+	<thead>
+	<tr class="admin_table_top">
+   		<th width="50"><label for="chkall"> <input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label></th>
+		<th width="60">编号</th>
+		<th align="left">天数</th>
+		<th align="left">价格</th>
+		<th width="180" class="admin_table_th_bg">操作</th>
+	</tr>
+	</thead>
+	<tbody>	 
+	{yun:}foreach item=v key=key from=$list{/yun}
+	 
+	<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+  	    <td width="50"><input type="checkbox" value="{yun:}$v.id{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+		<td class="ud">{yun:}$v.id{/yun}</td>
+		<td class="ud imghide" align="left">
+		<span onClick="checkdays('{yun:}$v.id{/yun}');" id="days{yun:}$v.id{/yun}" style="cursor:pointer;">{yun:}$v.days{/yun}</span>
+        <input class="input-text hidden" type="text"  maxlength='10' onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" id="inputdays{yun:}$v.id{/yun}" value="{yun:}$v.days{/yun}" onBlur="subdays('{yun:}$v.id{/yun}','index.php?m=admin_once&c=price_gear_ajax');" ><span onClick="checkdays('{yun:}$v.id{/yun}');">天</span>
+         <img class="" style="padding-left:5px;cursor:pointer;" title="" src="images/xg.png" onClick="checkdays('{yun:}$v.id{/yun}');"/>
+
+		</td>
+		<td class="ud imghide" align="left">
+		<span onClick="checkprice('{yun:}$v.id{/yun}');" id="price{yun:}$v.id{/yun}" style="cursor:pointer;">{yun:}$v.price{/yun}</span>
+        <input class="input-text hidden" type="text"  maxlength="10"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" id="inputprice{yun:}$v.id{/yun}" value="{yun:}$v.price{/yun}" onBlur="subprice('{yun:}$v.id{/yun}','index.php?m=admin_once&c=price_gear_ajax');" >元
+         <img class="" style="padding-left:5px;cursor:pointer;" title="" src="images/xg.png" onClick="checkprice('{yun:}$v.id{/yun}');"/>
+
+		</td>
+		<td class="ud">
+        <a href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=admin_once&c=price_gear_del&delid={yun:}$v.id{/yun}');" class="admin_new_c_bth admin_new_c_bth_sc">删除</a></td>
+	</tr> 
+	
+{yun:}/foreach{/yun} 
+  <tr style="background:#f1f1f1;">
+    <td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+    <td colspan="5" >
+    <label for="chkAll2">全选</label>&nbsp;
+    <input class="admin_button"  type="button" name="delsub" value="删除所选"  onclick="return really('del[]')"/></td>
+    </tr>
+	</tbody>
+</table>
+</form>
+</div>
+</div>
+</div>
+
+</div>
+<form class="layui-form">
+<div id="houtai_div" style=" width:450px; display:none;" >
+	     <table cellspacing='1' cellpadding='1' class="admin_examine_table">
+			<tbody>
+				<tr class="ui_td_11" >
+					<th width="100">天数：</th>
+					<td><input type="text" id='days' name="days"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  maxlength='10' class="input-text">天</td>
+				</tr>
+				<tr class="ui_td_11">
+					<th>价格：</th>
+					<td><input type="text" id='price' name="price"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  maxlength='10' class="input-text">元</td>
+				</tr>
+				<tr class="ui_td_11">
+					<td  class="ui_content_wrap" colspan='2' style="border-bottom:none"><input class="admin_examine_bth" type="button" name="sub" value=" 添加 "  onclick="saveIclass('index.php?m=admin_once&c=price_gear_add')"/></td>
+				</tr> 
+			</tbody>
+		</table>
+		<input type="hidden" name="pytoken" id="pytoken" value="{yun:}$pytoken{/yun}">
+</div></form>
+<script>
+layui.use(['layer', 'form','element'], function(){
+    var layer = layui.layer
+    ,form = layui.form
+	,element = layui.element
+    ,$ = layui.$;
+  });
+function subdays(id,url){
+	var days=$("#inputdays"+id).val();
+	if($.trim(days)==""){
+		parent.layer.msg("天数不能为空！",2,8,function(){location.reload();});return false;
+	}
+	var pytoken=$("#pytoken").val();
+	$.post(url,{id:id, days:days, pytoken:pytoken},function(data){
+		if(data==2){
+			layer.msg("已有此数量，请重新输入！",2,8);
+		}else{
+			$("#days"+id).html(days);
+			$("#days"+id).show();
+			$("#inputdays"+id).hide(); 
+		}
+	})
+}
+function checkdays(id){
+	$("#days"+id).hide();
+	$("#inputdays"+id).show();
+	$("#inputdays"+id).focus();
+}
+function subprice(id,url){
+	var price=$("#inputprice"+id).val();
+	if($.trim(price)==""){
+		parent.layer.msg("价格不能为空！",2,8,function(){location.reload();});return false;
+	}
+	var pytoken=$("#pytoken").val();
+	$.post(url,{id:id,price:price,pytoken:pytoken},function(data){
+		$("#price"+id).html(price);
+		$("#price"+id).show();
+		$("#inputprice"+id).hide(); 
+	})
+}
+function checkprice(id){
+	$("#price"+id).hide();
+	$("#inputprice"+id).show();
+	$("#inputprice"+id).focus();
+}
+function saveIclass(url){
+	var pytoken=$("#pytoken").val(); 
+	var days = $("#days").val();
+	var price=$.trim($("#price").val());
+	if(days=='' || days == '0'){
+		parent.layer.msg('天数不能为空！', 2, 8);return false;
+	}
+	if(price == ''){
+		price = 0;
+	}
+	loadlayer();
+	$.post(url,{days:days, price:price, pytoken:pytoken},function(msg){
+		parent.layer.closeAll('loading');
+		if(msg==1){
+			parent.layer.msg('已有此天数，请重新输入！', 2, 8);return false;
+		}else if(msg==2){
+			parent.layer.msg('添加成功！', 2,9,function(){location=location ;});return false;
+		}else if(msg==3){
+			parent.layer.msg('添加失败！', 2,8,function(){location=location ;});return false;
+		}
+	}); 
+}
+</script>  
+  </body>
+</html>

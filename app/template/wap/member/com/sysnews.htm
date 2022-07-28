@@ -1,0 +1,121 @@
+{yun:}include file="$wapstyle/member/cheader.htm"{/yun}
+<style>
+.comheader {
+    display: none;
+}
+</style>
+		<div class="m_header"><div class="m_header_cont">消息</div></div>
+			<!-- 页面整体部分 -->
+			<div class="synews_bg"></div>	<div class="synews_bgpd msg_header_pd">
+			
+				<!-- 滑动模块 -->
+			   <div class="card">
+				   <ul>
+					   <li data-url="hr" class="navigetali">
+						   <div class="card_logo">
+							   <img src="{yun:}$wap_style{/yun}/images/resume.png" alt="" width="100%" height="100%">
+								<div id="userid_jobnum" class="card_logo_circle" style="display: none;">
+									<span id="userid_jobnum_n" style="background: #f30; padding: 0.03rem 0.15rem;border-radius: 20px; color: #fff;"></span>
+								</div>
+						   </div>
+						   <i class="card_word">应聘简历</i>
+					   </li>
+					   <li data-url="attention_me" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/care_a_hang.png" alt="" width="100%" height="100%">
+						</div>
+						<i class="card_word">对我感兴趣</i>
+					   </li>
+					   {yun:}if $config.com_message{/yun}
+					   <li data-url="msg" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/genius_consult.png" alt="" width="100%" height="100%">
+							<div id="jobnum" class="card_logo_circle" style="display: none;">
+								<span id="jobnum_n" style="background: #f30; padding: 0.03rem 0.15rem;border-radius: 20px; color: #fff;"></span>
+							</div>
+						</div>
+						<i class="card_word">求职咨询</i>
+					   </li>
+					   {yun:}/if{/yun}
+					   <li data-url="sxnews" class="navigetali">
+						<div class="card_logo">
+							<img src="{yun:}$wap_style{/yun}/images/sixin.png" alt="" width="100%" height="100%">
+							<div id="sxnum" class="card_logo_circle" style="display: none;">
+								<span id="sxnum_n" style="background: #f30; padding: 0.03rem 0.15rem;border-radius: 20px; color: #fff;"></span>
+							</div>
+						</div>
+						<i class="card_word">系统消息</i>
+					   </li>
+				   </ul>
+			   </div>
+			   
+			</div>
+			<script src="{yun:}$wap_style{/yun}/js/jquery.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$wap_style{/yun}/js/vue.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$config_wapdomain{/yun}/js/vant/lib/vant.min.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$config_wapdomain{/yun}/js/vant/phpyun_vant.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script src="{yun:}$wap_style{/yun}/js/public.js?v={yun:}$config.cachecode{/yun}"></script>
+			<script>
+				var sysapp = new Vue({
+					el: '#sysChatbox',
+					data: {
+						allchat: [],
+						newchat: [],
+						oldchat: [],
+						chatCate: 'all',
+						looknum: 0,
+						newlook: {}
+					},
+					created() {
+						this.getSysmsg();
+					},
+					methods:{
+						getSysmsg() {
+							var self = this;
+							$.post('{yun:}url d=wxapp h=com m=msg c=sysnews{/yun}', {rand: Math.random()}, function(data){
+								var res = data.data;
+								self.looknum = res.looknum;
+								self.newlook = res.newlook;
+								if(res.userid_jobnum > 0){
+									$("#userid_jobnum_n").text(res.userid_jobnum);
+									$("#userid_jobnum").css('display', 'flex');
+								}
+								if(res.jobnum > 0){
+									$("#jobnum_n").text(res.jobnum);
+									$("#jobnum").css('display', 'flex');
+								}
+								if(res.sxnum > 0){
+									$("#sxnum_n").text(res.sxnum);
+									$("#sxnum").css('display', 'flex');
+								}
+							}, 'json');
+						},
+						topage(url){
+							window.location.href = url;
+						}
+					}
+				});
+				var wapurl = '{yun:}url m=wap{/yun}',
+					mine = {usertype:"{yun:}$usertype{/yun}"},
+					apage = 0,
+					npage = 0,
+					opage = 0,
+					newshow = false,
+					oldshow = false;
+					
+				var needRefresh = window.sessionStorage.getItem("needRefresh");
+				if(needRefresh!='false' && needRefresh){
+					window.sessionStorage.setItem("needRefresh", false);
+					location.reload();
+				}
+				var mhurl = '{yun:}url d=wxapp m=chat c=getmh{/yun}';
+				$(function () {
+					typeof fetchData !== 'undefined' && fetchData();
+					// 消息页面-顶部导航点击
+					$(".navigetali").on("click", function() {
+						var url = $(this).attr('data-url');
+						window.location.href = wapurl + 'member/index.php?c=' + url + '&chat=1';
+					});
+				});
+			</script>
+{yun:}include file="$wapstyle/footer.htm"{/yun}
